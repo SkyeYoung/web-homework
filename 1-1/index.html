@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>人人网注册页面</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="index.js"></script>
+  </head>
+  <body>
+    <header>
+      <span>
+        <span class="logo">人人网 LOGO</span>
+        <span class="slogan">10秒找到你所有朋友</span>
+      </span>
+      <span>已有人人网账号，<a href="login.html">登录</a></span>
+    </header>
+    <div class="main">
+      <form action="" method="post" id="register">
+        <fieldset>
+          <legend>免费开通人人网账号</legend>
+        </fieldset>
+
+        <div>
+          <label for="email">注册邮箱：</label>
+          <input type="email" name="email" id="email" />
+        </div>
+
+        <div>
+          <label></label>
+          <span
+            >你还可以使用 <a href="reigster-with-number">账号</a> 注册或者
+            <a href="register-with-phone">手机号</a> 注册</span
+          >
+        </div>
+
+        <div>
+          <label for="pass">创建密码：</label>
+          <input type="password" name="pass" id="pass" />
+        </div>
+
+        <div>
+          <label for="name">真实姓名：</label>
+          <input type="text" name="name" id="name" />
+        </div>
+
+        <div>
+          <label>性别：</label>
+          <span>
+            <input type="radio" name="sex" id="male" value="male" />
+            <label for="male">男</label>
+            <input type="radio" name="sex" id="female" value="female" />
+            <label for="female">女</label>
+          </span>
+        </div>
+
+        <div>
+          <label>生日：</label>
+          <span>
+            <select name="year" id="year"></select
+            ><label for="year">年</label>
+            <select name="month" id="month"></select
+            ><label for="month">月</label>
+            <select name="day" id="day"></select
+            ><label for="day">日</label>
+          </span>
+        </div>
+
+        <div>
+          <label for="status">我现在：</label>
+          <select name="status" id="status"></select>
+        </div>
+
+        <div>
+          <label></label>
+          <span id="code-image"></span>
+          <span><a href="#" id="refresh">看不清，换一张？</a></span>
+        </div>
+
+        <div>
+          <label for="code">验证码：</label>
+          <input type="text" name="code" id="code" />
+        </div>
+
+        <div>
+          <label></label>
+          <input type="submit" value="立即注册找好友" id="submit" />
+        </div>
+      </form>
+    </div>
+    <footer></footer>
+  </body>
+</html>
