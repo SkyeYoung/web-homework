@@ -1,0 +1,199 @@
+/*
+ * @Date: 2020-09-12 20:47:13
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-09-14 16:48:34
+ * @FilePath: \Web 作业\1-1\css\index.css
+ */
+
+:root {
+  --border-color: #999999;
+  --emphasize-color: #65a44c;
+  --warn-color: #f56c6c;
+  --info-color: #409eff;
+}
+
+#popup {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+}
+
+.popup {
+  background-color: #ffffff;
+  box-shadow: 0 2px 6px rgb(0, 0, 0, 0.2);
+  padding: 10px 20px;
+  min-width: 200px;
+  border-radius: 6px;
+  margin: 5px 0;
+  pointer-events: none;
+  animation: popup 1 0.4s;
+  opacity: 0;
+  transform: translateY(-40px);
+}
+
+.popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes popup {
+  0% {
+    transform: translateY(-40px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Header 部分 */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header > span {
+  display: inline-flex;
+  align-items: center;
+}
+
+header > span > .logo {
+  width: 150px;
+  height: 60px;
+  background-image: url("../asset/renren-logo.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: transparent;
+}
+
+header > span > .slogan,
+legend {
+  font-weight: 800;
+}
+
+/* Main 部分 */
+.main {
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: stretch;
+}
+
+#register {
+  flex-grow: 2;
+  border-right: 1px solid var(--border-color);
+}
+
+#register > fieldset {
+  border: none;
+  margin-top: 20px;
+}
+
+#register > div {
+  margin-left: 40px;
+  margin-bottom: 15px;
+}
+
+#register > div > label {
+  width: 80px;
+  text-align: right;
+  display: inline-block;
+}
+
+#code-image {
+  display: inline-block;
+  width: 120px;
+  height: 60px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+#submit {
+  background-color: var(--emphasize-color);
+  color: #ffffff;
+  border-radius: 4px 3px 3px 4px;
+  font-size: 18px;
+  padding: 4px 6px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+#submit::after {
+  content: "";
+  display: inline-block;
+  border-top: 15px solid transparent;
+  border-left: 20px solid var(--emphasize-color);
+  border-bottom: 15px solid transparent;
+  position: absolute;
+  transform: translate(6px, -3px);
+}
+
+#submit:hover {
+  opacity: 0.9;
+}
+
+nav {
+  min-width: 250px;
+  width: 35%;
+  background-color: #f7f7f7;
+  font-family: sans-serif;
+  padding: 8px;
+}
+
+nav > .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav > .title h2 {
+  border: none;
+  color: #949494;
+  font-size: 1.8em;
+  margin-bottom: 0.6em;
+}
+
+nav > .title h3 {
+  color: #c2c2c2;
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0.6em 0;
+}
+
+nav .emphasize {
+  color: var(--emphasize-color);
+  margin: 0 5px;
+  font-size: 1.4em;
+}
+
+nav .img-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+  margin-right: 15px;
+}
+
+nav .img-link > img {
+  width: 75px;
+  height: 75px;
+}
+
+/* Footer 部分 */
+footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer > .rule {
+  margin: 10px 0 10px auto;
+}

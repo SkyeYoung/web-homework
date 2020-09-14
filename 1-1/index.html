@@ -1,11 +1,18 @@
+<!--
+ * @Date: 2020-09-12 19:30:13
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-09-14 16:56:41
+ * @FilePath: \Web 作业\1-1\index.html
+-->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>人人网注册页面</title>
-    <link rel="stylesheet" href="index.css" />
-    <script src="index.js"></script>
+    <link rel="stylesheet" href="./css/index.css" />
+    <script type="module" src="./js/index.js"></script>
   </head>
   <body>
     <header>
@@ -13,35 +20,51 @@
         <span class="logo">人人网 LOGO</span>
         <span class="slogan">10秒找到你所有朋友</span>
       </span>
-      <span>已有人人网账号，<a href="login.html">登录</a></span>
+      <span>已有人人网账号，<a href="#">登录</a></span>
     </header>
     <div class="main">
-      <form action="" method="post" id="register">
+      <div id="popup"></div>
+      <form method="post" id="register">
         <fieldset>
           <legend>免费开通人人网账号</legend>
         </fieldset>
 
         <div>
           <label for="email">注册邮箱：</label>
-          <input type="email" name="email" id="email" />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="请输入邮箱"
+          />
         </div>
 
         <div>
           <label></label>
           <span
-            >你还可以使用 <a href="reigster-with-number">账号</a> 注册或者
-            <a href="register-with-phone">手机号</a> 注册</span
+            >你还可以使用 <a href="#">账号</a> 注册或者
+            <a href="#">手机号</a> 注册</span
           >
         </div>
 
         <div>
           <label for="pass">创建密码：</label>
-          <input type="password" name="pass" id="pass" />
+          <input
+            type="password"
+            name="pass"
+            id="pass"
+            placeholder="请输入密码"
+          />
         </div>
 
         <div>
           <label for="name">真实姓名：</label>
-          <input type="text" name="name" id="name" />
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="请输入真实姓名"
+          />
         </div>
 
         <div>
@@ -79,15 +102,37 @@
 
         <div>
           <label for="code">验证码：</label>
-          <input type="text" name="code" id="code" />
+          <input type="text" name="code" id="code" placeholder="请输入验证码" />
         </div>
 
         <div>
           <label></label>
-          <input type="submit" value="立即注册找好友" id="submit" />
+          <button type="submit" id="submit">立即注册找好友</button>
         </div>
       </form>
+
+      <nav>
+        <div class="title">
+          <div>
+            <h2>你知道吗？</h2>
+            <h3>人人网是中国<span class="emphasize">最大</span>的 SNS 社区</h3>
+            <h3>平均每人找到<span class="emphasize">105 位</span>好友</h3>
+          </div>
+        </div>
+        <div class="hot-homepage">
+          <h3>最热门公共主页</h3>
+          <span></span>
+        </div>
+        <div class="hot-game">
+          <h3>最热门游戏</h3>
+          <span></span>
+        </div>
+      </nav>
     </div>
-    <footer></footer>
+    <footer>
+      <span class="rule"
+        >点击免费开通账号表示同意并遵守 <a href="#">人人服务条款</a>
+      </span>
+    </footer>
   </body>
 </html>
