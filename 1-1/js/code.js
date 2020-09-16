@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-09-13 14:05:35
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-14 16:14:08
- * @FilePath: \Web 作业\1-1\js\code.js
+ * @LastEditTime: 2020-09-14 19:52:38
+ * @FilePath: \程序\1-1\js\code.js
  */
 
 import { getRandomHSLArr, getRandomSign } from "./tool.js";

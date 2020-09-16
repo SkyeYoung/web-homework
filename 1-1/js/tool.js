@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-09-13 10:04:06
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-14 15:17:23
- * @FilePath: \Web 作业\1-1\js\tool.js
+ * @LastEditTime: 2020-09-14 19:52:30
+ * @FilePath: \程序\1-1\js\tool.js
  */
 
 /**

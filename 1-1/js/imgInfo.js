@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-09-14 16:30:58
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-14 16:51:53
- * @FilePath: \Web 作业\1-1\js\imginfo.js
+ * @LastEditTime: 2020-09-14 19:52:20
+ * @FilePath: \程序\1-1\js\imgInfo.js
  */
 
 const homepage = [

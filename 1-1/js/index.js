@@ -1,8 +1,8 @@
 /*
  * @Date: 2020-09-12 20:45:58
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-14 16:54:30
- * @FilePath: \Web 作业\1-1\js\index.js
+ * @LastEditTime: 2020-09-16 20:13:29
+ * @FilePath: \程序\1-1\js\index.js
  */
 
 import { createCode, validateCode, validateNone } from "./code.js";
@@ -21,12 +21,12 @@ import { homepage, game } from "./imginfo.js";
     const result = value + start;
 
     return `<option value='${result}'${
-      selectedValue === result ? "selected" : ""
+      selectedValue === result ? " selected" : ""
     }>${result}</option>`;
   };
 
   /**
-   * 消息提示
+   * 渲染消息提示
    * @param {object} attr 标签属性
    * @param {string} inner 标签内文字
    */
@@ -38,11 +38,14 @@ import { homepage, game } from "./imginfo.js";
         {
           className: "popup",
           onanimationend: function animationEndAction() {
+            // 先固定状态，方便后面的动画
             this.classList.add("show");
 
+            // 先添加退出动画
             setTimeout(() => {
               this.style.transition = "all 0.4s";
               this.classList.remove("show");
+              // 再移除
               setTimeout(() => {
                 this.remove();
               }, 1000);
@@ -131,9 +134,9 @@ import { homepage, game } from "./imginfo.js";
       "还在啃老",
       "准备修仙",
     ];
-    status.innerHTML += statusList.map((v, i) =>
-      optionHTML(v, "", statusList[0])
-    );
+    status.innerHTML += statusList
+      .map((v) => optionHTML(v, "", statusList[0]))
+      .join("");
   };
 
   /**
@@ -175,17 +178,19 @@ import { homepage, game } from "./imginfo.js";
 
       // 表单数据
       const data = new FormData(form);
+      // 表单数据转化为数组
       const dataArr = [];
       data.forEach((v, k) => dataArr.push([k, v]));
 
+      // 从数组中过滤出未通过检测的值
       const checkArr = dataArr.filter(
         (v) => validateNone(v[1]) || (v[0] === "code" && !validateCode(v[1]))
       );
 
-      //检查是否存在未填写或错误的信息，并渲染相应提示
+      //检查是否存在未填写或错误的信息，并渲染相应消息提示
       m.render(document.querySelector("#popup"), {
         children:
-          checkArr.length > 0
+          checkArr.length > 0 // 存在未通过检测的数据
             ? [
                 ...checkArr.map((v, i) =>
                   renderPopup(
@@ -194,7 +199,7 @@ import { homepage, game } from "./imginfo.js";
                         (i + 1) * 100
                       }ms;`,
                     },
-                    v[0] === "code"
+                    v[0] === "code" && !validateCode(v[1])
                       ? "验证码错误，请重新输入。"
                       : `请输入${keyTextMap.get(v[0])}。`
                   )
@@ -205,7 +210,7 @@ import { homepage, game } from "./imginfo.js";
                   {
                     style: `color: var(--info-color);`,
                   },
-                  `${data.get("name")} 已成功注册，即将跳转...`
+                  `${data.get("name")}已成功注册，即将跳转...`
                 ),
               ],
       });
@@ -213,12 +218,12 @@ import { homepage, game } from "./imginfo.js";
   };
 
   const setHotLink = () => {
-    m.render(document.querySelector(".hot-homepage>span"), {
-      children: [...homepage.map((v, i) => renderImgLink(v))],
+    m.render(document.querySelector(".hot-homepage > span"), {
+      children: [...homepage.map((v) => renderImgLink(v))],
     });
 
-    m.render(document.querySelector(".hot-game>span"), {
-      children: [...game.map((v, i) => renderImgLink(v))],
+    m.render(document.querySelector(".hot-game > span"), {
+      children: [...game.map((v) => renderImgLink(v))],
     });
   };
 
@@ -226,7 +231,9 @@ import { homepage, game } from "./imginfo.js";
    * DOM 加载完成后处理事件
    */
   window.addEventListener("DOMContentLoaded", () => {
+    // 设置出生日期数据
     setCalender();
+    // 设置个人状态数据
     setStatus();
     // 验证码只是用来模拟的……其实没啥用
     setCode();
