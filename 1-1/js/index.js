@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-12 20:45:58
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-16 20:13:29
+ * @LastEditTime: 2020-09-16 20:16:55
  * @FilePath: \程序\1-1\js\index.js
  */
 
@@ -199,7 +199,7 @@ import { homepage, game } from "./imginfo.js";
                         (i + 1) * 100
                       }ms;`,
                     },
-                    v[0] === "code" && !validateCode(v[1])
+                    v[0] === "code" && !validateNone(v[1])
                       ? "验证码错误，请重新输入。"
                       : `请输入${keyTextMap.get(v[0])}。`
                   )
