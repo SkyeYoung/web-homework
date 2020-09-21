@@ -2,7 +2,7 @@
 /*
  * @Date: 2020-09-19 11:21:50
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-20 18:37:11
+ * @LastEditTime: 2020-09-21 13:47:37
  * @FilePath: \程序\2\css\index.scss
  */
 * {
@@ -14,6 +14,11 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Microsoft YaHei', arial;
+}
+
+.fade {
+  opacity: 0;
+  pointer-events: none;
 }
 
 header .header-top {
@@ -142,15 +147,108 @@ header nav > .menu > .sub-menu > a:hover {
 }
 
 div.main .banner {
-  height: 60vh;
+  height: 70vh;
   background: url("../asset/banner/bg.jpg") no-repeat center #676767;
-  background-size: contain;
 }
 
 footer > .link {
   height: 90px;
   margin-top: 90px;
   background-color: #0061aa;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+footer > .link > .special-link {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 387.85219px;
+  -webkit-transform: translateY(-45px);
+          transform: translateY(-45px);
+}
+
+footer > .link > .special-link > .sexangle {
+  display: block;
+  position: relative;
+  -webkit-filter: drop-shadow(0px 0px 0px #ffffff);
+          filter: drop-shadow(0px 0px 0px #ffffff);
+  margin-bottom: 1px;
+}
+
+footer > .link > .special-link > .sexangle:not(:last-of-type) {
+  margin-right: -22.98152px;
+}
+
+footer > .link > .special-link > .sexangle:nth-of-type(2n + 1) {
+  -webkit-transform: translateY(45px);
+          transform: translateY(45px);
+}
+
+footer > .link > .special-link > .sexangle:hover > div.dark {
+  color: #378fc6;
+}
+
+footer > .link > .special-link > .sexangle:hover > div.light {
+  color: #0061aa;
+}
+
+footer > .link > .special-link > .sexangle > div {
+  border-left: 25.98152px solid transparent;
+  border-right: 25.98152px solid transparent;
+  height: 0;
+  width: 107.35566px;
+}
+
+footer > .link > .special-link > .sexangle > div:first-of-type {
+  border-bottom: 45px solid currentColor;
+}
+
+footer > .link > .special-link > .sexangle > div:last-of-type {
+  border-top: 45px solid currentColor;
+}
+
+footer > .link > .special-link > .sexangle > div.dark {
+  color: #0061aa;
+}
+
+footer > .link > .special-link > .sexangle > div.light {
+  color: #378fc6;
+}
+
+footer > .link > .special-link > .sexangle > span {
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-bottom: 3px;
+}
+
+footer > .link > .normal-link {
+  color: #ffffff;
+}
+
+footer > .link > .normal-link > span {
+  font-weight: bold;
+}
+
+footer > .link > .normal-link > a {
+  color: inherit;
+  text-decoration: none;
+  margin-left: 30px;
 }
 
 footer > .website-info {
@@ -165,6 +263,8 @@ footer > .website-info {
           align-items: center;
   color: #666666;
   text-align: center;
+  font-size: 14px;
+  margin: 20px 0;
 }
 
 footer > .website-info img {

@@ -1,12 +1,12 @@
 /*
  * @Date: 2020-09-19 14:05:33
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-19 20:36:03
+ * @LastEditTime: 2020-09-21 13:17:28
  * @FilePath: \程序\2\js\index.js
  */
 
 import { m } from './tool.js';
-import { navList } from './info.js';
+import { navList, specialLinkList, normalLinkList } from './info.js';
 
 /**
  * 设置导航栏
@@ -35,6 +35,7 @@ const setNav = () => {
     }
   };
 
+  // 渲染导航栏
   m.render(nav, {
     children: [
       ...navList.map((v) =>
@@ -65,8 +66,38 @@ const setNav = () => {
   });
 };
 
+const setSpecialLink = () => {
+  m.render(document.querySelector('span.special-link'), {
+    children: [
+      ...specialLinkList.map((v) =>
+        m(
+          'a',
+          {
+            href: v.link || '',
+            className: `sexangle ${v.name === '' ? 'fade' : ''}`,
+          },
+          m('div', { className: v.top || '' }),
+          m('div', { className: v.bottom || '' }),
+          m('span', v.name),
+        ),
+      ),
+    ],
+  });
+};
+
+const setNormalLink = () => {
+  m.render(document.querySelector('span.normal-link'), {
+    children: [
+      m('span', '常用链接：'),
+      ...normalLinkList.map((v) => m('a', { href: v.link }, v.name)),
+    ],
+  });
+};
+
 (function IIFE() {
   window.addEventListener('DOMContentLoaded', () => {
     setNav();
+    setSpecialLink();
+    setNormalLink();
   });
 })();

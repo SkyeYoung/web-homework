@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-19 11:21:50
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-20 18:37:11
+ * @LastEditTime: 2020-09-21 13:47:37
  * @FilePath: \程序\2\css\index.scss
  */
 @import 'color-panel';
@@ -14,6 +14,12 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Microsoft YaHei', arial;
+}
+
+// 隐藏元素
+.fade {
+  opacity: 0;
+  pointer-events: none;
 }
 
 header {
@@ -130,17 +136,114 @@ header {
 
 div.main {
   .banner {
-    height: 60vh;
+    height: 70vh;
     background: url('../asset/banner/bg.jpg') no-repeat center #676767;
-    background-size: contain;
+    // background-size: contain;
   }
 }
 
 footer {
+  // .link 高度
+  $height: 90;
+  // 六边形边长
+  $length: $height/1.732;
+  // 加宽值
+  $wider: 0.2;
+  // px
+  $heightPx: #{$height}px;
+  $lengthPx: #{$length}px;
+  // 淡色
+  $light-color: #378fc6;
+
   > .link {
-    height: 90px;
-    margin-top: 90px;
+    // 蜂巢链接布局
+    height: $heightPx;
+    margin-top: $heightPx;
     background-color: $theme-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    > .special-link {
+      display: flex;
+      flex-wrap: wrap;
+      width: #{(1 + 1.732/2) * $length * 4}px; // 每四个换一次行
+      transform: translateY(-#{$height/2}px);
+
+      > .sexangle {
+        display: block;
+        position: relative;
+        filter: drop-shadow(0px 0px 0px #ffffff);
+        margin-bottom: 1px;
+
+        &:not(:last-of-type) {
+          margin-right: -#{$length/2 - 3}px;
+        }
+
+        &:nth-of-type(2n + 1) {
+          transform: translateY(#{$height/2}px);
+        }
+
+        &:hover {
+          > div {
+            &.dark {
+              color: $light-color;
+            }
+
+            &.light {
+              color: $theme-color;
+            }
+          }
+        }
+
+        // 用两个梯形拼成六边形（加宽正六边形的横向宽度得到，使得视觉上更好看）
+        > div {
+          border-left: #{$length/2}px solid transparent;
+          border-right: #{$length/2}px solid transparent;
+          height: 0;
+          width: #{(1 + 1.732/2 + $wider) * $length}px;
+
+          &:first-of-type {
+            border-bottom: #{(1.732/2) * $length}px solid currentColor;
+          }
+
+          &:last-of-type {
+            border-top: #{(1.732/2) * $length}px solid currentColor;
+          }
+
+          &.dark {
+            color: $theme-color;
+          }
+
+          &.light {
+            color: $light-color;
+          }
+        }
+
+        > span {
+          color: #ffffff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: fit-content;
+          padding-bottom: 3px;
+        }
+      }
+    }
+
+    > .normal-link {
+      color: #ffffff;
+
+      > span {
+        font-weight: bold;
+      }
+      > a {
+        color: inherit;
+        text-decoration: none;
+        margin-left: 30px;
+      }
+    }
   }
 
   > .website-info {
@@ -149,6 +252,8 @@ footer {
     align-items: center;
     color: #666666;
     text-align: center;
+    font-size: 14px;
+    margin: 20px 0;
 
     img {
       height: 60px;

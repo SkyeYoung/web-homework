@@ -1,3 +1,4 @@
+// 导航列表
 const navList = [
   {
     name: '网站首页',
@@ -108,4 +109,82 @@ const navList = [
   },
 ];
 
-export { navList };
+// 特殊链接列表（六边形中的）
+const specialLinkList = [
+  {
+    name: '主题网站',
+    link: '#',
+    top: 'dark',
+    bottom: 'light',
+  },
+  {
+    name: '校报在线',
+    link: '#',
+    top: 'dark',
+    bottom: 'dark',
+  },
+  {
+    name: '景荣春事迹',
+    link: '#',
+    top: 'dark',
+    bottom: 'light',
+  },
+  {
+    name: '宣传片',
+    link: '#',
+    top: 'dark',
+    bottom: 'dark',
+  },
+  {
+    name: '',
+  },
+  {
+    name: '英文网站',
+    link: '#',
+    top: 'light',
+    bottom: 'light',
+  },
+  {
+    name: '',
+  },
+  {
+    name: '航标灯',
+    link: '#',
+    top: 'light',
+    bottom: 'light',
+  },
+];
+
+// 常用链接列表
+const normalLinkList = [
+  {
+    name: '融媒体投稿',
+    link: '#',
+  },
+  {
+    name: '信息公开',
+    link: '#',
+  },
+  {
+    name: '学校信箱',
+    link: '#',
+  },
+  {
+    name: '招标公开',
+    link: '#',
+  },
+  {
+    name: '教务管理',
+    link: '#',
+  },
+  {
+    name: '图书',
+    link: '#',
+  },
+  {
+    name: '学报',
+    link: '#',
+  },
+];
+
+export { navList, specialLinkList, normalLinkList };
