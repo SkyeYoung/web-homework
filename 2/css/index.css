@@ -2,9 +2,10 @@
 /*
  * @Date: 2020-09-19 11:21:50
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-21 13:47:37
+ * @LastEditTime: 2020-09-21 16:34:27
  * @FilePath: \程序\2\css\index.scss
  */
+/* 全局 */
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -21,6 +22,13 @@ body {
   pointer-events: none;
 }
 
+/* header 头部 */
+/*
+ * @Date: 2020-09-21 16:33:27
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-09-21 16:33:42
+ * @FilePath: \程序\2\css\_header.scss
+ */
 header .header-top {
   background-color: #4b4b4b;
   display: -webkit-box;
@@ -146,11 +154,48 @@ header nav > .menu > .sub-menu > a:hover {
   background-color: #cee0ed;
 }
 
+/* main 主体 */
+/*
+ * @Date: 2020-09-21 16:32:53
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-09-21 17:22:52
+ * @FilePath: \程序\2\css\_main.scss
+ */
 div.main .banner {
   height: 70vh;
+  max-height: 576px;
   background: url("../asset/banner/bg.jpg") no-repeat center #676767;
 }
 
+div.main .public-info {
+  margin-top: 15px;
+  padding: 0 10%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 2fr 3fr 2fr;
+      grid-template-columns: 2fr 3fr 2fr;
+}
+
+div.main .public-info > .other {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+div.main .public-info > .other > a > img {
+  height: 95px;
+  width: 100%;
+}
+
+/* footer 底部 */
+/*
+ * @Date: 2020-09-21 16:31:53
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-09-22 10:47:30
+ * @FilePath: \程序\2\css\_footer.scss
+ */
 footer > .link {
   height: 90px;
   margin-top: 90px;
@@ -171,7 +216,7 @@ footer > .link > .special-link {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  width: 387.85219px;
+  width: 387.8461px;
   -webkit-transform: translateY(-45px);
           transform: translateY(-45px);
 }
@@ -179,13 +224,13 @@ footer > .link > .special-link {
 footer > .link > .special-link > .sexangle {
   display: block;
   position: relative;
-  -webkit-filter: drop-shadow(0px 0px 0px #ffffff);
-          filter: drop-shadow(0px 0px 0px #ffffff);
+  -webkit-filter: drop-shadow(0px 0px 1px #ffffff);
+          filter: drop-shadow(0px 0px 1px #ffffff);
   margin-bottom: 1px;
 }
 
 footer > .link > .special-link > .sexangle:not(:last-of-type) {
-  margin-right: -22.98152px;
+  margin-right: -23.98076px;
 }
 
 footer > .link > .special-link > .sexangle:nth-of-type(2n + 1) {
@@ -202,14 +247,15 @@ footer > .link > .special-link > .sexangle:hover > div.light {
 }
 
 footer > .link > .special-link > .sexangle > div {
-  border-left: 25.98152px solid transparent;
-  border-right: 25.98152px solid transparent;
+  border-left: 25.98076px solid transparent;
+  border-right: 25.98076px solid transparent;
   height: 0;
-  width: 107.35566px;
+  width: 107.35383px;
 }
 
 footer > .link > .special-link > .sexangle > div:first-of-type {
   border-bottom: 45px solid currentColor;
+  margin-bottom: -1px;
 }
 
 footer > .link > .special-link > .sexangle > div:last-of-type {

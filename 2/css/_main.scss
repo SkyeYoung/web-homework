@@ -1,0 +1,36 @@
+/*
+ * @Date: 2020-09-21 16:32:53
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-09-21 17:22:52
+ * @FilePath: \程序\2\css\_main.scss
+ */
+
+div.main {
+  .banner {
+    height: 70vh;
+    max-height: 576px;
+    background: url('../asset/banner/bg.jpg') no-repeat center #676767;
+    // background-size: contain;
+  }
+
+  .public-info {
+    margin-top: 15px;
+    padding: 0 10%;
+    // height: 300px;
+    display: grid;
+    grid-template-columns: 2fr 3fr 2fr;
+
+    > .other {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+
+      > a {
+        > img {
+          height: 95px;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,118 @@
+/*
+ * @Date: 2020-09-21 16:33:27
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-09-21 16:33:42
+ * @FilePath: \程序\2\css\_header.scss
+ */
+
+header {
+  .header-top {
+    background-color: #4b4b4b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+
+    > span.hello {
+      font-size: 12px;
+      color: #fff;
+      display: block;
+      line-height: 30px;
+    }
+
+    > .link {
+      display: flex;
+      align-items: center;
+
+      > .search {
+        display: inline-block;
+        position: relative;
+
+        .search-input {
+          width: 150px;
+          height: 25px;
+        }
+
+        .search-submit {
+          border: 0;
+          outline: 0;
+          background-color: transparent;
+          background-image: url('../asset/search.png');
+          width: 25px;
+          height: 25px;
+          position: absolute;
+          right: 0;
+          top: 0;
+          cursor: pointer;
+        }
+      }
+      > a {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .logo {
+    padding: 10px 0;
+    padding-left: 10%;
+
+    > img {
+      height: 88px;
+    }
+  }
+
+  nav {
+    background-color: $theme-color;
+    display: flex;
+    justify-content: center;
+
+    > .menu {
+      display: inline-block;
+      text-align: center;
+      position: relative;
+
+      &:hover {
+        background-color: $nav-color;
+
+        > a {
+          color: $theme-color;
+        }
+
+        > .sub-menu {
+          pointer-events: all;
+          opacity: 1;
+        }
+      }
+
+      > a {
+        display: block;
+        text-decoration: none;
+        color: $nav-color;
+        padding: 14px 0;
+      }
+
+      > .sub-menu {
+        position: absolute;
+        background-color: $theme-color;
+        width: 100%;
+        font-size: smaller;
+        opacity: 0;
+        pointer-events: none;
+        overflow: hidden;
+
+        > a {
+          display: block;
+          text-decoration: none;
+          color: $nav-color;
+          padding: 10px 0;
+
+          &:hover {
+            color: $theme-color;
+            text-decoration: underline;
+            background-color: $theme-color-light;
+          }
+        }
+      }
+    }
+  }
+}

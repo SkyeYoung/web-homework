@@ -1,0 +1,19 @@
+// 绝对值
+@function abs($num) {
+  @if ($num < 0) {
+    @return -$num;
+  } @else {
+    @return $num;
+  }
+}
+
+// 开根号
+@function sqrt($num) {
+  $temp: 1;
+
+  @while abs($temp - $num / $temp) > 1e-6 {
+    $temp: ($temp + $num/$temp) / 2;
+  }
+
+  @return $temp;
+}

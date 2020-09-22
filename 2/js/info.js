@@ -1,3 +1,13 @@
+/*
+ * @Date: 2020-09-19 15:26:46
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-09-22 14:14:41
+ * @FilePath: \程序\2\js\info.js
+ */
+
+/******************************************************************************
+ * Header 部分的链接
+ ******************************************************************************/
 // 导航列表
 const navList = [
   {
@@ -109,7 +119,49 @@ const navList = [
   },
 ];
 
-// 特殊链接列表（六边形中的）
+/******************************************************************************
+ * Main 部分的链接
+ ******************************************************************************/
+// 公告和新闻因为太多放在 placard-info.js 和 news-info.js 里
+
+// 其它图片链接
+const otherLinkList = [
+  {
+    src: './asset/link/1.jpg',
+    link: '#',
+    alt: '航向深蓝',
+  },
+  {
+    src: './asset/link/2.png',
+    link: '#',
+    alt: '科大校友',
+  },
+  {
+    src: './asset/link/3.png',
+    link: '#',
+    alt: '就业指导',
+  },
+  {
+    src: './asset/link/4.png',
+    link: '#',
+    alt: '信息门户',
+  },
+  {
+    src: './asset/link/5.png',
+    link: '#',
+    alt: '信息公开',
+  },
+  {
+    src: './asset/link/6.png',
+    link: '#',
+    alt: '规章制度',
+  },
+];
+
+/******************************************************************************
+ * Footer 部分的链接
+ ******************************************************************************/
+// 特殊链接列表（蜂巢）
 const specialLinkList = [
   {
     name: '主题网站',
@@ -136,7 +188,7 @@ const specialLinkList = [
     bottom: 'dark',
   },
   {
-    name: '',
+    name: '', // 用于占空，方便布局
   },
   {
     name: '英文网站',
@@ -145,7 +197,7 @@ const specialLinkList = [
     bottom: 'light',
   },
   {
-    name: '',
+    name: '', // 用于占空，方便布局
   },
   {
     name: '航标灯',
@@ -187,4 +239,4 @@ const normalLinkList = [
   },
 ];
 
-export { navList, specialLinkList, normalLinkList };
+export { navList, otherLinkList, specialLinkList, normalLinkList };

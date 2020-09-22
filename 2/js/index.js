@@ -1,12 +1,17 @@
 /*
  * @Date: 2020-09-19 14:05:33
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-21 13:17:28
+ * @LastEditTime: 2020-09-22 13:58:44
  * @FilePath: \程序\2\js\index.js
  */
 
 import { m } from './tool.js';
-import { navList, specialLinkList, normalLinkList } from './info.js';
+import {
+  navList,
+  specialLinkList,
+  normalLinkList,
+  otherLinkList,
+} from './info.js';
 
 /**
  * 设置导航栏
@@ -35,7 +40,6 @@ const setNav = () => {
     }
   };
 
-  // 渲染导航栏
   m.render(nav, {
     children: [
       ...navList.map((v) =>
@@ -66,6 +70,25 @@ const setNav = () => {
   });
 };
 
+
+
+
+/**
+ * 设置其它链接
+ */
+const setOtherLink = () => {
+  m.render(document.querySelector('div.public-info > div.other'), {
+    children: [
+      ...otherLinkList.map((v) =>
+        m('a', { href: v.link }, m('img', { src: v.src })),
+      ),
+    ],
+  });
+};
+
+/**
+ * 设置特殊链接（蜂巢）
+ */
 const setSpecialLink = () => {
   m.render(document.querySelector('span.special-link'), {
     children: [
@@ -85,6 +108,9 @@ const setSpecialLink = () => {
   });
 };
 
+/**
+ * 设置常用链接
+ */
 const setNormalLink = () => {
   m.render(document.querySelector('span.normal-link'), {
     children: [
@@ -97,6 +123,7 @@ const setNormalLink = () => {
 (function IIFE() {
   window.addEventListener('DOMContentLoaded', () => {
     setNav();
+    setOtherLink();
     setSpecialLink();
     setNormalLink();
   });

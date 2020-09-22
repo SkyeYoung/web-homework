@@ -1,0 +1,140 @@
+/*
+ * @Date: 2020-09-21 16:31:53
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-09-22 10:47:30
+ * @FilePath: \程序\2\css\_footer.scss
+ */
+
+@import 'tool';
+
+// 根号 3
+$sqrt_3: sqrt(3);
+// .link 高度
+$height: 90;
+// 六边形边长
+$length: $height/$sqrt_3;
+// 加宽值
+$wider: 0.2;
+// px
+$heightPx: #{$height}px;
+$lengthPx: #{$length}px;
+// 淡色
+$light-color: #378fc6;
+
+footer {
+  > .link {
+    // 蜂巢链接布局
+    height: $heightPx;
+    margin-top: $heightPx;
+    background-color: $theme-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    > .special-link {
+      display: flex;
+      flex-wrap: wrap;
+      width: #{(1 + $sqrt_3/2) * $length * 4}px; // 每四个换一次行
+      transform: translateY(-#{$height/2}px);
+
+      > .sexangle {
+        display: block;
+        position: relative;
+        // 使用 shadow 模拟白边
+        filter: drop-shadow(0px 0px 1px #ffffff);
+        // 上下间距
+        margin-bottom: 1px;
+
+        // 左右间距
+        &:not(:last-of-type) {
+          margin-right: -#{$length/2 - 2}px; // 2px 用于添加间隙
+        }
+
+        // 奇数部分下沉
+        &:nth-of-type(2n + 1) {
+          transform: translateY(#{$height/2}px);
+        }
+
+        &:hover {
+          > div {
+            &.dark {
+              color: $light-color;
+            }
+
+            &.light {
+              color: $theme-color;
+            }
+          }
+        }
+
+        // 用两个梯形拼成六边形（加宽正六边形的横向宽度得到，使得视觉上更好看）
+        > div {
+          border-left: #{$length/2}px solid transparent;
+          border-right: #{$length/2}px solid transparent;
+          height: 0;
+          width: #{(1 + $sqrt_3/2 + $wider) * $length}px;
+
+          &:first-of-type {
+            border-bottom: #{($sqrt_3/2) * $length}px solid currentColor;
+            // 用于掩盖 drop-shadow 造成的线条
+            margin-bottom: -1px;
+          }
+
+          &:last-of-type {
+            border-top: #{($sqrt_3/2) * $length}px solid currentColor;
+          }
+
+          &.dark {
+            color: $theme-color;
+          }
+
+          &.light {
+            color: $light-color;
+          }
+        }
+
+        > span {
+          color: #ffffff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: fit-content;
+          padding-bottom: 3px; // 使文字看起来更垂直居中
+        }
+      }
+    }
+
+    > .normal-link {
+      color: #ffffff;
+
+      > span {
+        font-weight: bold;
+      }
+      > a {
+        color: inherit;
+        text-decoration: none;
+        margin-left: 30px;
+      }
+    }
+  }
+
+  > .website-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666666;
+    text-align: center;
+    font-size: 14px;
+    margin: 20px 0;
+
+    img {
+      height: 60px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  }
+}
