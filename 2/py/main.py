@@ -1,4 +1,10 @@
-#!/usr/bin/env python3
+'''
+Date: 2020-09-21 19:21:13
+LastEditors: Skye Young
+LastEditTime: 2020-09-23 10:55:12
+FilePath: \程序\2\py\main.py
+'''
+# !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -33,8 +39,8 @@ def post2list(ele: PageElement):
     for i in range(len(post_list)):
         for li in uls[i]('li'):
             post_list[i]['children'].append({
-                'name': ''.join(li.a.text.split()),
-                'link': li.a['href'],
+                'name': ''.join(li('a')[-1].text.split()),
+                'link': li('a')[-1]['href'],
                 'new': True if li.img else False,
                 'date': li.span.text if li.span else ''
             })
@@ -59,11 +65,11 @@ def main():
 
     # 公告部分
     placard = res_html.find(id='boxtext1')
-    with open('../js/placard-info.js', 'w', encoding='utf-8') as f:
+    with open('./placard-info.js', 'w', encoding='utf-8') as f:
         json.dump(post2list(placard), f, ensure_ascii=False)
     # 新闻部分
     news = res_html.find(id='boxtext2').find_next()
-    with open('../js/news-info.js', 'w', encoding='utf-8') as f:
+    with open('./news-info.js', 'w', encoding='utf-8') as f:
         json.dump(post2list(news), f, ensure_ascii=False)
 
 

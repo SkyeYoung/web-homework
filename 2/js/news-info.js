@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-22 14:10:47
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-22 14:14:57
+ * @LastEditTime: 2020-09-23 10:59:14
  * @FilePath: \程序\2\js\news-info.js
  */
 
@@ -11,6 +11,12 @@ export const newsList = [
     name: '科大要闻',
     link: 'http://www.just.edu.cn/news/kdyw_8158/list.htm',
     children: [
+      {
+        name: '学校组织开展研究生新学期教学秩序检查工作',
+        link: 'http://www.just.edu.cn/news/2020/0922/c8158a269363/page.htm',
+        new: false,
+        date: '09-22',
+      },
       {
         name: '中国铁塔江苏省分公司孔庆茹一行来校交流',
         link: 'http://www.just.edu.cn/news/2020/0919/c8158a269287/page.htm',
@@ -62,12 +68,6 @@ export const newsList = [
       {
         name: '长山校区开学典礼首秀：2020级研究生新生潜精研思做新时代创新...',
         link: 'http://www.just.edu.cn/news/2020/0917/c8158a269194/page.htm',
-        new: false,
-        date: '09-17',
-      },
-      {
-        name: '开学第一课|不负芳华，做奋斗的追梦人',
-        link: 'http://www.just.edu.cn/news/2020/0917/c8158a269176/page.htm',
         new: false,
         date: '09-17',
       },
@@ -276,64 +276,64 @@ export const newsList = [
     link: 'http://www.just.edu.cn/news/dgkd_8163/list.htm',
     children: [
       {
-        name: '',
+        name: '《江海入梦来》江苏科技大学长山校区宣传片重磅发布！',
         link: 'http://www.just.edu.cn/news/2020/0729/c8163a268068/page.htm',
         new: false,
         date: '07-29',
       },
       {
-        name: '',
+        name: '这里将成为回忆|别了，江科大南校区!',
         link:
           'https://mp.weixin.qq.com/s?__biz=MzA5MjA3NTE5Ng==&mid=2651040767&idx=1&sn=43b27a55273c15c34e4fda749dc24906&chksm=8b85ae2cbcf2273a7f06288105347d2eea91dc61365a55db117c6baf77f36d1cae726f7e088d&token=2055537948&lang=zh_CN#rd',
         new: false,
         date: '07-18',
       },
       {
-        name: '',
+        name: '又见毕业季!江苏科技大学2020届毕业生高光时刻',
         link: 'http://www.just.edu.cn/news/2020/0630/c8163a267096/page.htm',
         new: false,
         date: '06-30',
       },
       {
-        name: '',
+        name: '这里将成为回忆|终点站——江科大西校区到了',
         link: 'http://www.just.edu.cn/news/2020/0617/c8163a266639/page.htm',
         new: false,
         date: '06-17',
       },
       {
-        name: '',
+        name: '在江科大最想完成的25件事，这些你都打卡了吗？',
         link: 'http://www.just.edu.cn/news/2020/0616/c8163a266561/page.htm',
         new: false,
         date: '06-13',
       },
       {
-        name: '',
+        name: '《江海入梦来》预告片震撼来袭！江小科带您看新校区',
         link: 'http://www.just.edu.cn/news/2020/0515/c8163a264479/page.htm',
         new: false,
         date: '05-15',
       },
       {
-        name: '',
+        name: '初夏青葱|东校区最新风光图片',
         link: 'http://www.just.edu.cn/news/2020/0507/c8163a263940/page.htm',
         new: false,
         date: '05-08',
       },
       {
-        name: '',
+        name: '世界读书日|笔墨间的力量，与你共赏',
         link:
           'https://mp.weixin.qq.com/s?__biz=MzA5MjA3NTE5Ng==&mid=503551540&idx=1&sn=df564cce1cdc4a8e55169537d33ed56c&chksm=0b8593e73cf21af107663a376a0e49a5536270b2552f7f611686e0e98169784f5d48dd174e7b&mpshare=1&scene=23&srcid=0423nMtIxQxTwk5Sf0qNCG0i&sharer_sharetime=1587628085430&sharer_shareid=b31bc86b1d68c086b118c099f2eaebb8#rd',
         new: false,
         date: '04-24',
       },
       {
-        name: '',
+        name: '江小科同学，欢迎你回家！',
         link:
           'https://mp.weixin.qq.com/s?__biz=MzA5MjA3NTE5Ng==&mid=2651035114&idx=1&sn=b4fa90fa85ed0dbd6c932c734b9e30be&chksm=8b859039bcf2192f4d58fa6ab875866658a3b5df45eb9e19098c282730607ef5ce07140bd118&token=1555231697&lang=zh_CN#rd',
         new: false,
         date: '04-19',
       },
       {
-        name: '',
+        name: '想再见到，江科大和你',
         link:
           'https://mp.weixin.qq.com/s?__biz=MzA5MjA3NTE5Ng==&mid=503551206&idx=1&sn=23c49702a6e7b93d107fdae74cd1a16c&chksm=0b8591353cf21823c67b44e122b618cc23c9f9b993179399a4bd99944e73322c5b74e8636a53&mpshare=1&scene=23&srcid=0321KibnqWYRwNt8ncVnvq8q&sharer_sharetime=1584791663805&sharer_shareid=b31bc86b1d68c086b118c099f2eaebb8#rd',
         new: false,

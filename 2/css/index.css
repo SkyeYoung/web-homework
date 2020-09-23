@@ -158,7 +158,7 @@ header nav > .menu > .sub-menu > a:hover {
 /*
  * @Date: 2020-09-21 16:32:53
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-21 17:22:52
+ * @LastEditTime: 2020-09-23 13:20:18
  * @FilePath: \程序\2\css\_main.scss
  */
 div.main .banner {
@@ -168,12 +168,106 @@ div.main .banner {
 }
 
 div.main .public-info {
-  margin-top: 15px;
-  padding: 0 10%;
+  margin: 15px 8% 0 8%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 2fr 3fr 2fr;
-      grid-template-columns: 2fr 3fr 2fr;
+  -ms-grid-columns: 2fr 3fr 336px;
+      grid-template-columns: 2fr 3fr 336px;
+  gap: 15px;
+}
+
+div.main .public-info > .placard,
+div.main .public-info > .news {
+  font-size: 14px;
+}
+
+div.main .public-info > .placard > .tabs,
+div.main .public-info > .news > .tabs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  width: 100%;
+  height: 30px;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(40%, #0061aa), to(#cee0ed));
+  background-image: linear-gradient(90deg, #0061aa 40%, #cee0ed);
+  padding-left: 4px;
+  margin-bottom: 10px;
+}
+
+div.main .public-info > .placard > .tabs > a,
+div.main .public-info > .news > .tabs > a {
+  display: inline-block;
+  padding: 4px 8px;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+div.main .public-info > .placard > .tabs > a.on, div.main .public-info > .placard > .tabs > a:hover,
+div.main .public-info > .news > .tabs > a.on,
+div.main .public-info > .news > .tabs > a:hover {
+  color: #0061aa;
+  background-color: #ffffff;
+}
+
+div.main .public-info > .placard > .posts > a,
+div.main .public-info > .news > .posts > a {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  margin-top: 2px;
+  width: 100%;
+  text-decoration: none;
+  color: #333333;
+  line-height: 24px;
+}
+
+div.main .public-info > .placard > .posts > a::before,
+div.main .public-info > .news > .posts > a::before {
+  content: '';
+  position: absolute;
+  width: 3px;
+  border-left: 5px solid #999999;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+}
+
+div.main .public-info > .placard > .posts > a > .name,
+div.main .public-info > .news > .posts > a > .name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 400px;
+  padding-left: 14px;
+}
+
+div.main .public-info > .placard > .posts > a > .sign,
+div.main .public-info > .news > .posts > a > .sign {
+  display: inline-block;
+}
+
+div.main .public-info > .placard > .posts > a > .sign.is-new,
+div.main .public-info > .news > .posts > a > .sign.is-new {
+  background-size: contain;
+  height: 14px;
+  width: 25px;
+  background-image: url(../asset/new.gif);
+}
+
+div.main .public-info > .placard > .posts > a > .date,
+div.main .public-info > .news > .posts > a > .date {
+  color: #999999;
 }
 
 div.main .public-info > .other {
