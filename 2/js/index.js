@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-19 14:05:33
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-24 13:00:03
+ * @LastEditTime: 2020-09-24 19:04:30
  * @FilePath: \程序\2\js\index.js
  */
 
@@ -83,22 +83,31 @@ const setBanner = () => {
 
   const showBanner = (index = 0) => {
     const navDivList = banner.querySelectorAll('div.nav > div');
-    const imgList = banner.querySelectorAll('div.imgs > a');
+    const imgLinkList = banner.querySelectorAll('div.imgs > a');
     const container = banner.querySelector('div.container');
+    const firstImg = imgLinkList[0].querySelector('img');
 
+    // 容器没有宽度时，设置容器宽度
+    if (!container.style.width) {
+      firstImg.addEventListener('load', function () {
+        container.style.width = this.offsetWidth + 'px';
+      });
+    }
+
+    // 窗口改变时，重新设置容器宽度
+    // 不复用了，直接再复制一遍。。。
+    window.addEventListener('resize', () => {
+      container.style.width = firstImg.offsetWidth + 'px';
+    });
+
+    // 设置显示的图片
     navDivList.forEach((v, i) => {
       if (v.classList.contains('on') && i !== index) {
         v.classList.remove('on');
-        imgList[i].classList.remove('on');
+        imgLinkList[i].classList.remove('on');
       } else if (!v.classList.contains('on') && i === index) {
         v.classList.add('on');
-        imgList[i].classList.add('on');
-
-        // 设置容器宽度
-        if (!container.style.width) {
-          container.style.width =
-            imgList[i].querySelector('img').offsetWidth + 'px';
-        }
+        imgLinkList[i].classList.add('on');
       }
     });
   };
@@ -185,6 +194,7 @@ const setTabLink = (parentSelector, list) => {
             href: v.link,
             title: v.name,
             target: '_blank',
+            rel: 'noopener noreferrer',
           },
           m('span', { className: 'name' }, v.name),
           m('span', { className: `sign${v.new ? ' is-new' : ''}` }),
@@ -205,6 +215,7 @@ const setTabLink = (parentSelector, list) => {
             {
               href: v.link,
               target: '_blank',
+              rel: 'noopener noreferrer',
               onmouseenter: () => renderPosts(i),
             },
             v.name,
