@@ -7,7 +7,7 @@
 
 import { createCode, validateCode, validateNone } from './code.js';
 import { m } from './tool.js';
-import { homepage, game } from './imginfo.js';
+import { homepage, game } from './imgInfo.js';
 
 (function IIFE() {
   /**
