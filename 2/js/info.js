@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-19 15:26:46
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-22 14:14:41
+ * @LastEditTime: 2020-09-23 20:47:15
  * @FilePath: \程序\2\js\info.js
  */
 
@@ -124,7 +124,36 @@ const navList = [
  ******************************************************************************/
 // 公告和新闻因为太多放在 placard-info.js 和 news-info.js 里
 
-// 其它图片链接
+// Banner 图片链接信息
+const bannerLinkList = [
+  {
+    src: './asset/banner/1.jpg',
+    link: '#',
+    alt: '校长第一课',
+  },
+  {
+    src: './asset/banner/2.jpg',
+    link: '#',
+    alt: '不负芳华 做奋斗的追梦人 2020级新生开启深蓝逐梦新航...',
+  },
+  {
+    src: './asset/banner/3.png',
+    link: '#',
+    alt: '迎新',
+  },
+  {
+    src: './asset/banner/4.png',
+    link: '#',
+    alt: '慰问信',
+  },
+  {
+    src: './asset/banner/5.jpg',
+    link: '#',
+    alt: '硬核|江科大教师连续在世界名刊上发表学术论文',
+  },
+];
+
+// 其它图片链接信息
 const otherLinkList = [
   {
     src: './asset/link/1.jpg',
@@ -239,4 +268,10 @@ const normalLinkList = [
   },
 ];
 
-export { navList, otherLinkList, specialLinkList, normalLinkList };
+export {
+  navList,
+  bannerLinkList,
+  otherLinkList,
+  specialLinkList,
+  normalLinkList,
+};

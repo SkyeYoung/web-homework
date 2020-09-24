@@ -1,16 +1,82 @@
 /*
  * @Date: 2020-09-21 16:32:53
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-23 13:20:18
+ * @LastEditTime: 2020-09-24 11:07:50
  * @FilePath: \程序\2\css\_main.scss
  */
 
 div.main {
   .banner {
-    height: 70vh;
-    max-height: 576px;
     background: url('../asset/banner/bg.jpg') no-repeat center #676767;
     // background-size: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > .container {
+      position: relative;
+      height: 70vh;
+      max-height: 576px;
+      overflow: hidden;
+
+      $padding: 14px;
+      > .imgs {
+        > a {
+          display: block;
+          height: inherit;
+          opacity: 0;
+
+          &.on {
+            opacity: 1;
+          }
+
+          > img {
+            height: 70vh;
+            max-height: 576px;
+            position: absolute;
+          }
+
+          > span {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            display: block;
+            padding: $padding;
+            color: #ffffff;
+            background-color: rgba($color: #000000, $alpha: 0.4);
+          }
+        }
+      }
+
+      > .nav {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        padding: $padding;
+        display: flex;
+
+        > div {
+          display: block;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          margin-right: 10px;
+          background-color: #ffffff;
+          opacity: 0.2;
+          cursor: pointer;
+          transition: opacity 0.4s;
+
+          &.on {
+            opacity: 1;
+          }
+
+          &:hover {
+            opacity: 0.8;
+          }
+        }
+      }
+    }
   }
 
   .public-info {
@@ -72,6 +138,7 @@ div.main {
             border-bottom: 3px solid transparent;
           }
 
+          // 链接名
           > .name {
             white-space: nowrap;
             overflow: hidden;
@@ -80,8 +147,11 @@ div.main {
             padding-left: 14px;
           }
 
+          // 图标
           > .sign {
             display: inline-block;
+            background-repeat: no-repeat;
+            background-position: center;
 
             &.is-new {
               background-size: contain;
@@ -91,6 +161,7 @@ div.main {
             }
           }
 
+          // 日期
           > .date {
             color: #999999;
           }

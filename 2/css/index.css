@@ -26,7 +26,7 @@ body {
 /*
  * @Date: 2020-09-21 16:33:27
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-21 16:33:42
+ * @LastEditTime: 2020-09-23 19:39:14
  * @FilePath: \程序\2\css\_header.scss
  */
 header .header-top {
@@ -109,6 +109,7 @@ header nav > .menu {
   display: inline-block;
   text-align: center;
   position: relative;
+  z-index: 1;
 }
 
 header nav > .menu:hover {
@@ -158,13 +159,85 @@ header nav > .menu > .sub-menu > a:hover {
 /*
  * @Date: 2020-09-21 16:32:53
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-23 13:20:18
+ * @LastEditTime: 2020-09-24 11:07:50
  * @FilePath: \程序\2\css\_main.scss
  */
 div.main .banner {
+  background: url("../asset/banner/bg.jpg") no-repeat center #676767;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+div.main .banner > .container {
+  position: relative;
   height: 70vh;
   max-height: 576px;
-  background: url("../asset/banner/bg.jpg") no-repeat center #676767;
+  overflow: hidden;
+}
+
+div.main .banner > .container > .imgs > a {
+  display: block;
+  height: inherit;
+  opacity: 0;
+}
+
+div.main .banner > .container > .imgs > a.on {
+  opacity: 1;
+}
+
+div.main .banner > .container > .imgs > a > img {
+  height: 70vh;
+  max-height: 576px;
+  position: absolute;
+}
+
+div.main .banner > .container > .imgs > a > span {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  display: block;
+  padding: 14px;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+div.main .banner > .container > .nav {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+div.main .banner > .container > .nav > div {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: #ffffff;
+  opacity: 0.2;
+  cursor: pointer;
+  -webkit-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+}
+
+div.main .banner > .container > .nav > div.on {
+  opacity: 1;
+}
+
+div.main .banner > .container > .nav > div:hover {
+  opacity: 0.8;
 }
 
 div.main .public-info {
@@ -255,6 +328,8 @@ div.main .public-info > .news > .posts > a > .name {
 div.main .public-info > .placard > .posts > a > .sign,
 div.main .public-info > .news > .posts > a > .sign {
   display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 div.main .public-info > .placard > .posts > a > .sign.is-new,

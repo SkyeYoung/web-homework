@@ -1,13 +1,14 @@
 /*
  * @Date: 2020-09-19 14:05:33
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-23 11:56:42
+ * @LastEditTime: 2020-09-24 13:00:03
  * @FilePath: \程序\2\js\index.js
  */
 
 import { m } from './tool.js';
 import {
   navList,
+  bannerLinkList,
   specialLinkList,
   normalLinkList,
   otherLinkList,
@@ -71,9 +72,93 @@ const setNav = () => {
 };
 
 /**
- * 设置公告列表信息
+ * 设置 banner
  */
+const setBanner = () => {
+  const banner = document.querySelector('div.banner');
+  // 是否点击
+  let isClicked = false;
+  // 当前图片序号
+  let currentIndex = 0;
 
+  const showBanner = (index = 0) => {
+    const navDivList = banner.querySelectorAll('div.nav > div');
+    const imgList = banner.querySelectorAll('div.imgs > a');
+    const container = banner.querySelector('div.container');
+
+    navDivList.forEach((v, i) => {
+      if (v.classList.contains('on') && i !== index) {
+        v.classList.remove('on');
+        imgList[i].classList.remove('on');
+      } else if (!v.classList.contains('on') && i === index) {
+        v.classList.add('on');
+        imgList[i].classList.add('on');
+
+        // 设置容器宽度
+        if (!container.style.width) {
+          container.style.width =
+            imgList[i].querySelector('img').offsetWidth + 'px';
+        }
+      }
+    });
+  };
+
+  m.render(banner, {
+    children: [
+      m(
+        'div',
+        { className: 'container' },
+        m(
+          'div',
+          { className: 'imgs' },
+          ...bannerLinkList.map((v) =>
+            m(
+              'a',
+              { href: v.link },
+              m('img', { src: v.src, alt: v.alt }),
+              m('span', v.alt),
+            ),
+          ),
+        ),
+        m(
+          'div',
+          { className: 'nav' },
+          ...bannerLinkList.map((v, i) =>
+            m('div', {
+              onclick: () => {
+                showBanner(i);
+                isClicked = true;
+                currentIndex = i + 1;
+              },
+            }),
+          ),
+        ),
+      ),
+    ],
+  });
+
+  // 初始化，显示第一个 banner
+  showBanner();
+
+  // 定时切换图片
+  setInterval(() => {
+    if (isClicked) {
+      setTimeout(() => {
+        isClicked = false;
+      }, 10000);
+    } else {
+      showBanner(currentIndex);
+      currentIndex++;
+      if (currentIndex == bannerLinkList.length) {
+        currentIndex = 0;
+      }
+    }
+  }, 5000);
+};
+
+/**
+ * 设置公告和新闻文章列表信息
+ */
 const setTabLink = (parentSelector, list) => {
   const parent = document.querySelector(parentSelector);
 
@@ -99,6 +184,7 @@ const setTabLink = (parentSelector, list) => {
           {
             href: v.link,
             title: v.name,
+            target: '_blank',
           },
           m('span', { className: 'name' }, v.name),
           m('span', { className: `sign${v.new ? ' is-new' : ''}` }),
@@ -118,6 +204,7 @@ const setTabLink = (parentSelector, list) => {
             'a',
             {
               href: v.link,
+              target: '_blank',
               onmouseenter: () => renderPosts(i),
             },
             v.name,
@@ -128,7 +215,7 @@ const setTabLink = (parentSelector, list) => {
     ],
   });
 
-  // 进行第一次渲染
+  // 初始化，显示第一栏的文章
   renderPosts();
 };
 
@@ -177,12 +264,19 @@ const setNormalLink = () => {
 
 (function IIFE() {
   window.addEventListener('DOMContentLoaded', () => {
+    // 导航栏
     setNav();
+    // banner
+    setBanner();
+    // 公告栏
     setTabLink('div.placard', placardList);
+    // 新闻栏
     setTabLink('div.news', newsList);
-
+    // 其它链接栏
     setOtherLink();
+    // 蜂巢链接
     setSpecialLink();
+    // 普通链接
     setNormalLink();
   });
 })();
