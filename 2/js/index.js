@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-19 14:05:33
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-09-24 19:04:30
+ * @LastEditTime: 2020-09-24 20:15:00
  * @FilePath: \程序\2\js\index.js
  */
 
@@ -29,7 +29,7 @@ const setNav = () => {
     if (subMenu && !subMenu.style.height) {
       const height = subMenu.offsetHeight;
       subMenu.style.height = '0';
-      // 在下一帧时，设置函数
+      // 在下一帧时，设置高度
       requestAnimationFrame(() => (subMenu.style.height = height + 'px'));
     }
   };

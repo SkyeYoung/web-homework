@@ -6,9 +6,8 @@
 
 **请勿直接复制抄袭，这个仓库可能和你的前端水平严重不符。**
 
-## 每一次作业的链接
+## 每一次作业的预览链接
 
-* [作业 1-1](https://skyeyoung.github.io/web-homework/1-1/)
-* [作业 1-2](https://skyeyoung.github.io/web-homework/1-2/)
-* [作业 2](https://skyeyoung.github.io/web-homework/2/)
-
+- [作业 1-1](https://skyeyoung.github.io/web-homework/1-1/)
+- [作业 1-2](https://skyeyoung.github.io/web-homework/1-2/)
+- [作业 2](https://skyeyoung.github.io/web-homework/2/)
