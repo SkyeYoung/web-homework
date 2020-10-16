@@ -1,14 +1,13 @@
 /*
  * @Date: 2020-10-15 16:32:21
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-17 02:18:28
- * @FilePath: \程序\3\4\js\index.js
+ * @LastEditTime: 2020-10-17 02:37:37
+ * @FilePath: \程序\3\操作表格\js\index.js
  */
 
 import { m, dataListener } from './tool.js';
 
-const defaultTd = ['td', '默认值'];
-
+// 数据
 let tableData = {
   row: 0,
   col: 0,
@@ -16,17 +15,18 @@ let tableData = {
   data: [],
 };
 
+// 发现数据变化后的行为
 let action = {
   col(prop, oldValue, newValue) {
-    let data = tableData.data;
-    let header = tableData.header;
+    let { data, header } = tableData;
+
     if (newValue < 0) return true; // <0,不赋值
     if (newValue === 0) tableData.row = 0;
     if (oldValue === newValue - 1) {
       header.push(['th', '默认值']);
       if (tableData.row === 0) tableData.row = 1;
       else {
-        data.forEach((v, i) => v.push(v[-1] || defaultTd.slice()));
+        data.forEach((v, i) => v.push(['td', '默认值']));
       }
     } else if (oldValue === newValue + 1) {
       header.pop();
@@ -36,13 +36,13 @@ let action = {
     renderTable();
   },
   row(prop, oldValue, newValue) {
-    let data = tableData.data;
+    let { data, header } = tableData;
 
     if (newValue < 0) return true; // <0,不赋值
     if (oldValue === newValue - 1) {
       data.push(
-        tableData.header.length > 0
-          ? new Array(tableData.header.length).fill(defaultTd.slice())
+        header.length > 0
+          ? Array.from({ length: header.length }, () => ['td', '默认值'])
           : [],
       );
     } else if (oldValue === newValue + 1) {
@@ -52,8 +52,12 @@ let action = {
     renderTable();
   },
 };
+// 监听数据变化
 dataListener(tableData, action);
 
+/**
+ * 渲染表格
+ */
 function renderTable() {
   m.render(document.querySelector('tbody#table-header'), {
     children: [
@@ -131,11 +135,14 @@ function renderTable() {
               },
               onblur() {
                 if (tableData.data[i][j].length > 0) {
+                  console.log(tableData.data[i]);
+
                   tableData.data[i][j].splice(
                     -1,
                     1,
                     this.textContent || this.innerText,
                   );
+                  console.log(tableData.data[i]);
                 }
                 this.removeAttribute('contenteditable');
               },
@@ -148,6 +155,9 @@ function renderTable() {
   });
 }
 
+/**
+ * 渲染表格工具栏
+ */
 function renderTableToolBar() {
   m.render(document.querySelector('div#table-area'), {
     children: [
@@ -213,5 +223,6 @@ function renderTableToolBar() {
 
 window.addEventListener('DOMContentLoaded', () => {
   renderTableToolBar();
+  // 初始化渲染
   renderTable();
 });
