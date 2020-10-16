@@ -1,0 +1,100 @@
+div#table-area {
+  width: 600px;
+}
+
+div#table-area div.table-top-toolbar,
+div#table-area div.table-toolbar {
+  height: 40px;
+  background-color: aliceblue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+div#table-area div.table-top-toolbar > input,
+div#table-area div.table-toolbar > input {
+  margin-left: 10px;
+}
+
+div#table-area div.table-top-toolbar.top,
+div#table-area div.table-toolbar.top {
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 5px;
+}
+
+div#table-area div.table-top-toolbar.bottom,
+div#table-area div.table-toolbar.bottom {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-radius: 0 0 10px 10px;
+  margin-top: 5px;
+}
+
+div#table-area div.table-top-toolbar.bottom > input.btn-add-row,
+div#table-area div.table-toolbar.bottom > input.btn-add-row {
+  cursor: pointer;
+}
+
+div#table-area div.table-wrapper {
+  width: inherit;
+}
+
+div#table-area div.table-wrapper.header {
+  overflow: hidden;
+}
+
+div#table-area div.table-wrapper.content {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  max-height: 60vh;
+  overflow-y: scroll;
+}
+
+div#table-area div.table-wrapper.content > table {
+  width: 583px;
+}
+
+div#table-area div.table-wrapper table {
+  width: inherit;
+  border-collapse: collapse;
+}
+
+div#table-area div.table-wrapper table tbody td,
+div#table-area div.table-wrapper table tbody th {
+  border: 1px solid aliceblue;
+  min-width: 80px;
+}
+
+div#table-area div.table-wrapper table tbody td.gutter, div#table-area div.table-wrapper table tbody td.check, div#table-area div.table-wrapper table tbody td.index,
+div#table-area div.table-wrapper table tbody th.gutter,
+div#table-area div.table-wrapper table tbody th.check,
+div#table-area div.table-wrapper table tbody th.index {
+  min-width: unset;
+}
+
+div#table-area div.table-wrapper table tbody td.gutter,
+div#table-area div.table-wrapper table tbody th.gutter {
+  width: 14px;
+}
+
+div#table-area div.table-wrapper table tbody td.check, div#table-area div.table-wrapper table tbody td.index,
+div#table-area div.table-wrapper table tbody th.check,
+div#table-area div.table-wrapper table tbody th.index {
+  text-align: center;
+  width: 30px;
+}
+
+div#table-area div.table-wrapper table tbody th:nth-last-child(3):first-child {
+  border: none;
+  opacity: 0;
+}
+
+div#table-area div.table-wrapper table tbody th:nth-last-child(3):first-child ~ th,
+div#table-area div.table-wrapper table tbody th:nth-last-child(3):first-child ~ td {
+  border: none;
+  opacity: 0;
+}

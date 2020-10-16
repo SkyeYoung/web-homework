@@ -1,0 +1,93 @@
+div#table-area {
+  // width: max-content;
+  width: 600px;
+
+  div.table-top-toolbar,
+  div.table-toolbar {
+    height: 40px;
+    background-color: aliceblue;
+
+    display: flex;
+    align-items: center;
+
+    > input {
+      margin-left: 10px;
+    }
+
+    &.top {
+      border-radius: 10px 10px 0 0;
+      margin-bottom: 5px;
+    }
+
+    &.bottom {
+      justify-content: center;
+      border-radius: 0 0 10px 10px;
+      margin-top: 5px;
+
+      > input.btn-add-row {
+        cursor: pointer;
+      }
+    }
+  }
+
+  div.table-wrapper {
+    width: inherit;
+
+    &.header {
+      overflow: hidden;
+    }
+
+    &.content {
+      box-sizing: border-box;
+      max-height: 60vh;
+      overflow-y: scroll;
+
+      > table {
+        width: 600px - 17px;
+      }
+    }
+
+    table {
+      width: inherit;
+      border-collapse: collapse;
+
+      tbody {
+        td,
+        th {
+          border: 1px solid aliceblue;
+          min-width: 80px;
+
+          &.gutter,
+          &.check,
+          &.index {
+            min-width: unset;
+          }
+
+          &.gutter {
+            width: 14px;
+          }
+
+          &.check,
+          &.index {
+            text-align: center;
+            width: 30px;
+          }
+        }
+
+        th {
+          // 当第一个和倒数第三个元素一样时，隐藏
+          &:nth-last-child(3):first-child {
+            border: none;
+            opacity: 0;
+
+            & ~ th,
+            & ~ td {
+              border: none;
+              opacity: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
