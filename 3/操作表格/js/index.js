@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-15 16:32:21
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-17 09:06:29
+ * @LastEditTime: 2020-10-17 09:31:01
  * @FilePath: \程序\3\操作表格\js\index.js
  */
 
@@ -73,9 +73,7 @@ function renderTable() {
                 document
                   .querySelector('tbody#table-content')
                   .querySelectorAll('input[type="checkbox"]')
-                  .forEach((v) => {
-                    v.checked = true;
-                  });
+                  .forEach((v) => (v.checked = true));
               }
             },
           }),
@@ -88,7 +86,9 @@ function renderTable() {
               'data-col': i,
               className: arr.length === i + 1 ? 'gutter' : '',
               onmouseover() {
-                this.setAttribute('contenteditable', true);
+                if (!this.classList.contains('gutter')) {
+                  this.setAttribute('contenteditable', true);
+                }
               },
               onblur() {
                 if (tableData.header[i].length > 0) {
@@ -135,14 +135,11 @@ function renderTable() {
               },
               onblur() {
                 if (tableData.data[i][j].length > 0) {
-                  console.log(tableData.data[i]);
-
                   tableData.data[i][j].splice(
                     -1,
                     1,
                     this.textContent || this.innerText,
                   );
-                  console.log(tableData.data[i]);
                 }
                 this.removeAttribute('contenteditable');
               },
@@ -216,12 +213,8 @@ function renderTableToolBar() {
         {
           class: ['table-wrapper', 'content'],
           onscroll() {
-            requestAnimationFrame(
-              () =>
-                (document.querySelector(
-                  'div.table-wrapper.header',
-                ).scrollLeft = this.scrollLeft),
-            );
+            const header = document.querySelector('div.table-wrapper.header');
+            requestAnimationFrame(() => (header.scrollLeft = this.scrollLeft));
           },
         },
         m('table', m('tbody', { id: 'table-content' })),
