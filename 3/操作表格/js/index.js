@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-15 16:32:21
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-17 02:37:37
+ * @LastEditTime: 2020-10-17 09:06:29
  * @FilePath: \程序\3\操作表格\js\index.js
  */
 
@@ -213,7 +213,17 @@ function renderTableToolBar() {
       ),
       m(
         'div',
-        { class: ['table-wrapper', 'content'] },
+        {
+          class: ['table-wrapper', 'content'],
+          onscroll() {
+            requestAnimationFrame(
+              () =>
+                (document.querySelector(
+                  'div.table-wrapper.header',
+                ).scrollLeft = this.scrollLeft),
+            );
+          },
+        },
         m('table', m('tbody', { id: 'table-content' })),
       ),
       m('div', { class: ['table-toolbar', 'bottom'] }),
