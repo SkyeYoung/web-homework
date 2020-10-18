@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-15 16:32:21
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-17 09:31:01
+ * @LastEditTime: 2020-10-17 15:08:17
  * @FilePath: \程序\3\操作表格\js\index.js
  */
 
@@ -164,12 +164,16 @@ function renderTableToolBar() {
         m('input', {
           type: 'button',
           value: '新增一列',
-          onclick: () => tableData.col++,
+          onclick() {
+            tableData.col++;
+          },
         }),
         m('input', {
           type: 'button',
           value: '删除一列',
-          onclick: () => tableData.col--,
+          onclick() {
+            tableData.col--;
+          },
         }),
         m('input', {
           class: ['btn-add-row'],
