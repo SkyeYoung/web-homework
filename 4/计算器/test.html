@@ -1,0 +1,92 @@
+<!--
+ * @Date: 2020-10-20 20:55:51
+ * @LastEditors: Skye Young
+ * @LastEditTime: 2020-10-20 22:46:29
+ * @FilePath: \程序\4\计算器\test.html
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- add mocha css, to show results -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css"
+    />
+    <!-- add mocha framework code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+    <script>
+      mocha.setup('bdd'); // minimal setup
+    </script>
+    <!-- add chai -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+    <script>
+      // chai has a lot of stuff, let's make assert global
+      let assert = chai.assert;
+    </script>
+  </head>
+
+  <body>
+    <!-- the element with id="mocha" will contain test results -->
+    <div id="mocha"></div>
+
+    <script src="./js/calculator.js"></script>
+    <script>
+      describe('basicCalc-plus', function () {
+        it('小数相加-string-{.1+.2}', function () {
+          assert.equal(basicCalc.exec('plus', '.1', '.2').get(), '0.3');
+        });
+
+        it('小数相加-number-{.1+.2}', function () {
+          assert.equal(basicCalc.exec('plus', 0.1, 0.2).get(), '0.3');
+        });
+
+        it('小数相加-string-{.12345678987654321+.2}', function () {
+          assert.equal(
+            basicCalc.exec('plus', '.12345678987654321', '.2').get(),
+            '0.32345678987654321',
+          );
+        });
+      });
+
+      describe('basicCalc-minus', function () {
+        it('string-{.2-.1}', function () {
+          assert.equal(basicCalc.exec('-', '.1', '.2').get(), '0.1');
+        });
+
+        it('number-{.2-1}', function () {
+          assert.equal(basicCalc.exec('-', 0.1, 0.2).get(), '0.1');
+        });
+
+        it('string-{.12345678987654321-.2}', function () {
+          assert.equal(
+            basicCalc.exec('-', '.2', '.12345678987654321').get(),
+            '-0.7654321012345679',
+          );
+        });
+      });
+
+      describe('calculator', function () {
+        it('300000+.6', function () {
+          assert.equal(calculator.calc('300000+.6'), '300000.6');
+        });
+
+        it('(3+4)×5-6', function () {
+          assert.equal(calculator.calc('(3+4)×5-6'), '29');
+        });
+
+        it('(3×5+.2)÷3-0.8', function () {
+          assert.equal(calculator.calc('(3×5+.2)÷3-0.8'), '0.4266666666666666');
+        });
+
+        // it('((3×5+.2)÷3-78)-(.29999×16.8)', function () {
+        //   assert.equal(
+        //     calculator.calc('((3×5+.2)÷3-78)-(.29999×16.8)'),
+        //     '0.4266666666666666',
+        //   );
+        // });
+      });
+
+      mocha.run();
+    </script>
+  </body>
+</html>

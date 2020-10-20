@@ -1,27 +1,110 @@
 /*
  * @Date: 2020-10-18 19:16:04
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-20 00:48:13
+ * @LastEditTime: 2020-10-20 23:31:30
  * @FilePath: \程序\4\计算器\js\calculator.js
  */
 
-const { insert } = require('./tool');
+const canUseBigInt = 'BigInt' in globalThis;
+
+const tool = {
+  /**
+   * 在字符串中插入符号
+   * @param {string} str
+   * @param {number} index
+   * @param {*} value
+   * @returns {string}
+   */
+  insert(str, index, value) {
+    return str.slice(0, index) + value + str.slice(index);
+  },
+  /**
+   * 在 '.' 开头的小数前补零
+   * @param {string} numStr
+   * @returns {string}
+   */
+  addZero(numStr) {
+    return numStr.startsWith('.') ? '0' + numStr : numStr;
+  },
+  /**
+   * 将数字字符串分为整数和小数部分
+   * @param {string} numStr
+   * @returns {string[]}
+   */
+  splitDot(numStr) {
+    return (this.addZero(numStr) + '.').split('.').splice(0, 2);
+  },
+  /**
+   * 安全精度
+   * @param {number} precision 精度
+   * @param  {...string} NumStrArr 数字字符串数组
+   * @returns {number}
+   */
+  safePrecision(precision, ...NumStrArr) {
+    return NumStrArr.every((v) => Number.isSafeInteger(+v * 10 ** precision))
+      ? precision
+      : this.safePrecision(precision - 1, ...NumStrArr);
+  },
+  /**
+   * 获取安全范围内更高精度
+   * @param {string} numStr1
+   * @param {string} numStr2
+   * @param {string} precision fallback
+   * @returns {number}
+   */
+  betterPrecision(numStr1, numStr2, precision) {
+    const d1 = this.splitDot(numStr1)[1];
+    const d2 = this.splitDot(numStr2)[1];
+    const longPrecision = Math.max(d1.length, d2.length, precision);
+    return canUseBigInt
+      ? longPrecision
+      : this.safePrecision(longPrecision, numStr1, numStr2);
+  },
+  /**
+   * @function
+   * @param {string} numStr
+   * @param {number} precision
+   * @returns {(number|bigint)} 肯定是个整数
+   */
+  float2int: canUseBigInt
+    ? (numStr, precision) => {
+        const [integer, decimals] = ('0' + numStr).split('.');
+        return BigInt(
+          integer +
+            (typeof decimals === 'undefined'
+              ? ''.padEnd(precision, '0')
+              : decimals.padEnd(precision, '0')),
+        );
+      }
+    : (numStr, precision) => Math.trunc(+numStr * 10 ** precision),
+  /**
+   * 非操作符(是数字)
+   * @param {*} str
+   * @returns {boolean}
+   */
+  isOperator(str) {
+    return isNaN(typeof str === 'string' ? str : String(str));
+  },
+};
 
 /**
  * 基础计算器
  */
+// FIXME 这里采用的精度处理方法存在很大的问题，实际只适用于加减乘，可能还有一点其它的简单操作
+// FIXME 要真的搞好，估计得做一个类似 Decimal.js 的东西，目前无法处理的部分暂时回退到原生的 number
 const basicCalc = {
   // 当前值，存储运算结果
   currentValue: '0',
   // 精度，小数点后 N 位
   precision: 6,
-  canUseBigInt: 'BigInt' in globalThis,
   // 核心计算操作，形式同插件
   core: {
     plus: {
       name: 'plus',
       symbol: '+',
       priorTo: [],
+      leftValIsOptional: false,
+      needProcess: true,
       exec: (leftVal, rightVal) => leftVal + rightVal,
     },
     minus: {
@@ -29,13 +112,15 @@ const basicCalc = {
       symbol: '-',
       priorTo: [],
       leftValIsOptional: true,
-      exec: (leftVal = 0, rightVal) => leftVal - rightVal,
+      needProcess: true,
+      exec: (leftVal, rightVal) => leftVal - rightVal,
     },
     multiply: {
       name: 'multiply',
       symbol: '×',
       priorTo: ['+', '-'],
       leftValIsOptional: false,
+      needProcess: true,
       exec: (leftVal, rightVal) => leftVal * rightVal,
     },
     division: {
@@ -43,15 +128,8 @@ const basicCalc = {
       symbol: '÷',
       priorTo: ['+', '-'],
       leftValIsOptional: false,
+      needProcess: false,
       exec: (leftVal, rightVal) => leftVal / rightVal,
-    },
-    // TODO 不应该设计在这里
-    decimal: {
-      name: 'decimal',
-      symbol: '.',
-      priorTo: ['others'],
-      leftValIsOptional: true,
-      exec: (leftVal = 0, rightVal) => parseFloat(`${leftVal}.${rightVal}`),
     },
   },
   // 插件
@@ -62,7 +140,6 @@ const basicCalc = {
     '-': 'minus',
     '×': 'multiply',
     '÷': 'division',
-    '.': 'decimal',
   },
   /**
    * 设置值
@@ -86,9 +163,9 @@ const basicCalc = {
   /**
    * 插件对应操作
    * @callback actionFunction
-   * @param {number} leftVal 操作符的左值
-   * @param {number} rightVal 操作符的右值
-   * @returns {number} 返回数据
+   * @param {(number|bigint)} leftVal 操作符的左值
+   * @param {(number|bigint)} rightVal 操作符的右值
+   * @returns {(number|bigint)} 返回数据
    */
 
   /**
@@ -106,6 +183,7 @@ const basicCalc = {
       symbol,
       priorTo = [],
       leftValIsOptional = false,
+      needProcess = true,
       exec,
     } = plugin;
 
@@ -126,6 +204,7 @@ const basicCalc = {
       symbol,
       priorTo,
       leftValIsOptional,
+      needProcess,
       exec,
     };
 
@@ -136,62 +215,11 @@ const basicCalc = {
    * @param {string} name 插件名
    */
   unregister(name) {
-    if (typeof name === undefined) throw new Error(`插件 ${name} 未被注册`);
-    const symbol = this.plugins[name].symbol;
-    this.plugins[name] = null;
-    this.symbols[symbol] = null;
+    if (typeof this.plugins[name] === 'undefined')
+      throw new Error(`插件 ${name} 未被注册`);
+    delete this.symbols[this.plugins[name].symbol];
+    delete this.plugins[name];
   },
-  /**
-   * 安全精度
-   * @param {number} precision 精度
-   * @param  {...string} NumStrArr 数字字符串数组
-   */
-  safePrecision(precision, ...NumStrArr) {
-    return NumStrArr.every((v) => Number.isSafeInteger(+v * 10 ** precision))
-      ? precision
-      : this.safePrecision(precision - 1, ...NumStrArr);
-  },
-  /**
-   * 将数字字符串分为整数和小数部分
-   * @param {string} numStr
-   */
-  splitDot(numStr) {
-    return ('0' + numStr + '.').split('.').splice(0, 2);
-  },
-  /**
-   * 获取安全范围内更高精度
-   * @param {string} numStr1
-   * @param {string} numStr2
-   * @todo 判断是否是数字
-   */
-  betterPrecision(numStr1, numStr2) {
-    const d1 = this.splitDot(numStr1)[1];
-    const d2 = this.splitDot(numStr2)[1];
-    const longPrecision = Math.max(d1.length, d2.length);
-    return this.canUseBigInt
-      ? longPrecision
-      : this.safePrecision(
-          longPrecision < this.precision ? this.precision : longPrecision,
-          numStr1,
-          numStr2,
-        );
-  },
-  /**
-   * @function
-   * @param {string} numStr
-   * @param {number} precision
-   * @returns {(number|bigint)} 肯定是个整数
-   */
-  float2int:
-    'BigInt' in globalThis
-      ? (numStr, precision) => {
-          const [integer, decimals] = ('0' + numStr).split('.');
-          if (typeof decimals === 'undefined') return BigInt(numStr); // 没有小数,直接返回
-          const arr = decimals.padEnd(precision, '0').split(''); // 扩充到指定位数
-          arr.splice(precision); //删除超出精度的部分
-          return BigInt(integer + arr.join(''));
-        }
-      : (numStr, precision) => Math.trunc(+numStr * 10 ** precision),
   /**
    * 执行操作
    * @param {string} actionName 执行的操作名，可以是插件名或插件对应的符号
@@ -201,37 +229,201 @@ const basicCalc = {
    */
   exec(actionName, rightVal, leftVal = '') {
     const name = actionName.length < 4 ? this.symbols[actionName] : actionName;
-    const func = this.core[name].exec || this.plugins[name].exec;
 
-    if (leftVal === '') leftVal = this.currentValue;
-    // 都为 bigint
+    if (typeof name === 'undefined')
+      throw new Error(`操作 ${actionName} 未被定义`);
+
+    const action =
+      (typeof this.core[name] !== 'undefined' && this.core[name]) ||
+      (typeof this.plugins[name] !== 'undefined' && this.plugins[name]);
+    const func = action.exec;
+
+    // 默认为 currentValue
+    if (leftVal === '')
+      leftVal = action.leftValIsOptional ? '0' : this.currentValue;
+
+    // 都为 bigint，直接操作
     if (typeof rightVal === 'bigint' && typeof leftVal === 'bigint')
       this.set(String(func(leftVal, rightVal)));
-    // 转换为 string 方便可能的小数计算
-    if (typeof rightVal !== 'string') rightVal = String(rightVal);
-    if (typeof leftVal !== 'string') leftVal = String(leftVal);
+    // 不适用精度处理
+    if (!action.needProcess)
+      this.set(String(func(Number(leftVal), Number(rightVal))));
+    else {
+      // 转换为 string 方便可能的小数计算
+      if (typeof rightVal !== 'string') rightVal = String(rightVal);
+      if (typeof leftVal !== 'string') leftVal = String(leftVal);
 
-    const precision = this.betterPrecision(leftVal, rightVal);
-
-    const result = func(
-      this.float2int(leftVal || this.currentValue, precision),
-      this.float2int(rightVal, precision),
-    );
-
-    // TODO 存在 bug
-    if (this.canUseBigInt) {
-      const intResult = func(
-        BigInt(this.splitDot(leftVal || this.currentValue)[0]),
-        BigInt(this.splitDot(rightVal)[0]),
+      const precision = tool.betterPrecision(leftVal, rightVal, this.precision);
+      let result = func(
+        tool.float2int(leftVal, precision),
+        tool.float2int(rightVal, precision),
       );
 
-      this.set(insert(String(result), intResult.length - 1, '.'));
-    } else {
-      this.set(String(result / 10 ** precision));
+      if (canUseBigInt) {
+        const intResult = String(
+          func(
+            BigInt(tool.splitDot(leftVal)[0]),
+            BigInt(tool.splitDot(rightVal)[0]),
+          ),
+        );
+
+        result = String(result).replace(/0+$/, '');
+        if (result.startsWith(intResult)) {
+          if (result.length !== intResult.length)
+            result = tool.insert(result, intResult.length, '.');
+        } else {
+          if (result.startsWith('-')) {
+            result = tool.insert(result, 1, '0.');
+          } else {
+            result = '0.' + result;
+          }
+        }
+
+        this.set(result);
+      } else {
+        this.set(String(result / 10 ** precision));
+      }
     }
 
     return this;
   },
 };
 
-const calculator = {};
+const calculator = {
+  register: basicCalc.register.bind(basicCalc),
+  unregister: basicCalc.unregister.bind(basicCalc),
+  /**
+   * 中缀表达式字符串转后缀表达式字符串数组
+   */
+  infix2suffix: (function () {
+    /**
+     * 将中缀表达式字符串转换为数组
+     * @param {string} infixStr 中缀表达式字符串
+     */
+    const infixStr2Arr = (infixStr) => {
+      const infixArr = [];
+      infixStr.split('').forEach((v) => {
+        if (v === ' ') return;
+
+        const lastEle = infixArr[infixArr.length - 1];
+
+        if (v === '(' || v === ')') infixArr.push(v);
+        else if (v === '.') {
+          infixArr.push((tool.isOperator(lastEle) ? '0' : infixArr.pop()) + v);
+        } else if (!tool.isOperator(v)) {
+          infixArr.push((tool.isOperator(lastEle) ? '' : infixArr.pop()) + v);
+        } else if (tool.isOperator(v)) {
+          if (v === lastEle) throw new Error(`运算符 ${v} 不能重复`);
+          else if (
+            tool.isOperator(lastEle) &&
+            typeof basicCalc.symbols[lastEle + v] !== 'undefined'
+          ) {
+            infixArr.push(infixArr.pop() + v);
+          } else {
+            infixArr.push(v);
+          }
+        }
+      });
+
+      return infixArr;
+    };
+
+    /**
+     * 检查优先级
+     * @param {string} actionSym 要比较的符号
+     * @param {string} comparedSym 被比较的符号
+     */
+    const priorTo = (actionSym, comparedSym) => {
+      const name = basicCalc.symbols[actionSym];
+      if (typeof name === 'undefined')
+        throw new Error(`操作 ${actionSym} 未被定义`);
+      const priorToArr =
+        (typeof basicCalc.core[name] !== 'undefined' &&
+          basicCalc.core[name].priorTo) ||
+        (typeof basicCalc.plugins[name] !== 'undefined' &&
+          basicCalc.plugins[name].priorTo);
+      if (priorToArr.indexOf('others') !== -1) return true;
+      return priorToArr.some((v) => v === comparedSym);
+    };
+
+    /**
+     * v为非括号操作符时的操作
+     * @param {string} v
+     */
+    const checkoutVal = (v) => {
+      const lastEle = operatorStack[operatorStack.length - 1];
+      if (
+        operatorStack.length === 0 ||
+        lastEle === '(' ||
+        priorTo(v, lastEle)
+      ) {
+        operatorStack.push(v);
+        return;
+      } else {
+        resultStack.push(operatorStack.pop());
+        checkoutVal(v);
+      }
+    };
+
+    // 运算符栈
+    let operatorStack;
+    // 转换结果栈
+    let resultStack;
+
+    /**
+     * 处理过程
+     * @param {string} infixStr 中缀表达式
+     * @returns {string[]}
+     */
+    const process = (infixStr) => {
+      operatorStack = [];
+      resultStack = [];
+
+      infixStr2Arr(infixStr).forEach((v) => {
+        if (v === '(') {
+          operatorStack.push(v);
+        } else if (v === ')') {
+          while (operatorStack.length > 0) {
+            const ele = operatorStack.pop();
+            if (ele === '(') break;
+            else resultStack.push(ele);
+          }
+        } else if (tool.isOperator(v)) {
+          checkoutVal(v);
+        } else resultStack.push(v); //数字
+      });
+
+      return resultStack.concat(operatorStack.reverse());
+    };
+
+    return process;
+  })(),
+  /**
+   * 计算后缀表达式
+   * @param {string[]} suffixArr 后缀表达式字符串数组
+   */
+  calcSuffix(suffixArr) {
+    const result = [];
+
+    console.log(suffixArr);
+
+    suffixArr.forEach((v) => {
+      return result.push(
+        tool.isOperator(v)
+          ? basicCalc.exec(v, result.pop(), result.pop() || 0).get() // 左值为空时默认返回 0
+          : v,
+      );
+    });
+
+    return result.pop();
+  },
+
+  /**
+   * 计算数据
+   */
+  calc(str) {
+    return this.calcSuffix(this.infix2suffix(str));
+  },
+};
+
+export { canUseBigInt, basicCalc, calculator };

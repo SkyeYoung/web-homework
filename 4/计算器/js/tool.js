@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-13 10:04:06
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-19 23:55:20
+ * @LastEditTime: 2020-10-20 12:21:27
  * @FilePath: \程序\4\计算器\js\tool.js
  */
 
@@ -176,16 +176,4 @@ const dataListener = (data, action) => {
   }
 };
 
-/**
- *
- */
-/**
- * 在字符串中插入符号
- * @param {string} str
- * @param {number} index
- * @param {*} value
- */
-const insert = (str, index, value) =>
-  str.slice(0, index) + value + str.slice(index);
-
-export { getRandomHSLArr, getRandomSign, m, dataListener, insert };
+export { getRandomHSLArr, getRandomSign, m, dataListener };
