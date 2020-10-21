@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-18 19:16:04
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-21 13:26:32
+ * @LastEditTime: 2020-10-22 00:13:49
  * @FilePath: \程序\4\计算器\js\calculator.js
  */
 
@@ -55,7 +55,7 @@ const tool = {
   betterPrecision(numStr1, numStr2, precision) {
     const d1 = this.splitDot(numStr1)[1];
     const d2 = this.splitDot(numStr2)[1];
-    const longPrecision = Math.max(d1.length, d2.length, precision);
+    const longPrecision = Math.max(d1.length, d2.length);
     return canUseBigInt
       ? longPrecision
       : this.safePrecision(longPrecision, numStr1, numStr2);
@@ -81,12 +81,27 @@ const tool = {
       }
     : (numStr, precision) => Math.trunc(+numStr * 10 ** precision),
   /**
-   * 非操作符(是数字)
+   * 是否为操作符
    * @param {*} str
    * @returns {boolean}
    */
   isOperator(str) {
     return isNaN(typeof str === 'string' ? str : String(str));
+  },
+  /**
+   * 是否为数组
+   * @param {*} variable
+   */
+  isArray(variable) {
+    return Object.prototype.toString.call(variable) == '[object Array]';
+  },
+  /**
+   * 非数组转换为数组
+   * @param {*} variable
+   * @param  {...any} rest 填充到转换后的数组中
+   */
+  var2Array(variable, ...rest) {
+    return this.isArray(variable) ? variable : [variable, ...rest];
   },
 };
 
@@ -108,7 +123,15 @@ const basicCalc = {
       priorTo: [],
       leftValIsOptional: false,
       needProcess: true,
-      exec: (leftVal, rightVal) => leftVal + rightVal,
+      exec: (leftVal, rightVal, precision) => {
+        let intResult = String(
+          (leftVal + rightVal) /
+            (canUseBigInt ? BigInt(10 ** precision) : 10 ** precision),
+        );
+        intResult =
+          intResult === '0' ? ''.padEnd(precision + 1, '0') : intResult;
+        return [String(leftVal + rightVal), intResult];
+      },
     },
     minus: {
       name: 'minus',
@@ -116,7 +139,14 @@ const basicCalc = {
       priorTo: [],
       leftValIsOptional: true,
       needProcess: true,
-      exec: (leftVal, rightVal) => leftVal - rightVal,
+      exec: (leftVal, rightVal, precision) => {
+        let intResult =
+          (leftVal - rightVal) /
+          (canUseBigInt ? BigInt(10 ** precision) : 10 ** precision);
+        intResult =
+          String(intResult) === '0' ? ''.padEnd(precision + 1, '0') : intResult;
+        return [String(leftVal - rightVal), intResult];
+      },
     },
     multiply: {
       name: 'multiply',
@@ -124,7 +154,18 @@ const basicCalc = {
       priorTo: ['+', '-'],
       leftValIsOptional: false,
       needProcess: true,
-      exec: (leftVal, rightVal) => leftVal * rightVal,
+      exec: (leftVal, rightVal, precision) => {
+        let intResult =
+          (leftVal * rightVal) /
+          (canUseBigInt
+            ? BigInt((10 ** precision) ** 2)
+            : (10 ** precision) ** 2);
+        intResult =
+          String(intResult) === '0'
+            ? ''.padEnd(precision * 2 + 1, '0')
+            : intResult;
+        return [String(leftVal * rightVal), intResult];
+      },
     },
     division: {
       name: 'division',
@@ -132,7 +173,10 @@ const basicCalc = {
       priorTo: ['+', '-'],
       leftValIsOptional: false,
       needProcess: false,
-      exec: (leftVal, rightVal) => leftVal / rightVal,
+      exec: (leftVal, rightVal, precision) => [
+        leftVal / rightVal,
+        leftVal / rightVal / 10 ** precision,
+      ],
     },
   },
   // 插件
@@ -168,7 +212,7 @@ const basicCalc = {
    * @callback actionFunction
    * @param {(number|bigint)} leftVal 操作符的左值
    * @param {(number|bigint)} rightVal 操作符的右值
-   * @returns {(number|bigint)} 返回数据
+   * @returns {(number[]|bigint[])} 返回数据
    */
 
   /**
@@ -247,43 +291,57 @@ const basicCalc = {
 
     // 都为 bigint，直接操作
     if (typeof rightVal === 'bigint' && typeof leftVal === 'bigint')
-      this.set(String(func(leftVal, rightVal)));
+      this.set(String(tool.var2Array(func(leftVal, rightVal))[0]));
+
     // 不适用精度处理
-    if (!action.needProcess)
-      this.set(String(func(Number(leftVal), Number(rightVal))));
-    else {
+    if (!action.needProcess) {
+      this.set(
+        String(tool.var2Array(func(Number(leftVal), Number(rightVal)))[0]),
+      );
+    } else {
       // 转换为 string 方便可能的小数计算
       if (typeof rightVal !== 'string') rightVal = String(rightVal);
       if (typeof leftVal !== 'string') leftVal = String(leftVal);
 
       const precision = tool.betterPrecision(leftVal, rightVal, this.precision);
-      let result = func(
-        tool.float2int(leftVal, precision),
-        tool.float2int(rightVal, precision),
+      let [result, intResult = 0] = tool.var2Array(
+        func(
+          tool.float2int(leftVal, precision),
+          tool.float2int(rightVal, precision),
+          precision,
+        ),
       );
+      // 再转一次防止操作函数中未做相关操作
+      result = String(result);
+      intResult = String(intResult);
+
+      console.log(result, intResult);
 
       if (canUseBigInt) {
-        const intResult = String(
-          func(
-            BigInt(tool.splitDot(leftVal)[0]),
-            BigInt(tool.splitDot(rightVal)[0]),
-          ),
-        );
-
-        result = String(result).replace(/0+$/, '');
-        if (result.startsWith(intResult)) {
-          if (result.length !== intResult.length)
-            result = tool.insert(result, intResult.length, '.');
-        } else {
+        if (!result.startsWith(intResult)) {
+          // 在数据前添零
           if (result.startsWith('-')) {
-            result = tool.insert(result, 1, '0.');
+            result = result.slice(1);
+            result = result.padStart(intResult.length, '0');
+            result = '-' + result;
           } else {
-            result = '0.' + result;
+            result = result.padStart(intResult.length, '0');
           }
+          result = tool.insert(result, result.startsWith('-') ? 2 : 1, '.');
+        } else {
+          result = tool.insert(
+            result,
+            (result.startsWith('-') ? 1 : 0) + intResult.length,
+            '.',
+          );
         }
+        // 小数点后都是 0 也要移除
+        if (result.indexOf('.') !== -1 && result.endsWith('0'))
+          result = result.replace(/0+$/, '');
+        // 移除尾部的 .
+        if (result.endsWith('.')) result = result.replace('.', '');
 
         this.set(result);
-        console.log(result);
       } else {
         this.set(String(result / 10 ** precision));
       }
@@ -408,8 +466,6 @@ const calculator = {
    */
   calcSuffix(suffixArr) {
     const result = [];
-
-    console.log(suffixArr);
 
     suffixArr.forEach((v) => {
       return result.push(

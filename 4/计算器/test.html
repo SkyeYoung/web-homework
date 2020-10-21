@@ -1,7 +1,7 @@
 <!--
  * @Date: 2020-10-20 20:55:51
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-21 13:27:46
+ * @LastEditTime: 2020-10-22 00:16:04
  * @FilePath: \程序\4\计算器\test.html
 -->
 <!DOCTYPE html>
@@ -54,8 +54,31 @@
         it('string-{.12345678987654321-.2}', function () {
           assert.equal(
             basicCalc.exec('-', '.2', '.12345678987654321').get(),
-            '-0.7654321012345679',
+            '-0.07654321012345679',
           );
+        });
+      });
+
+      describe('basicCalc-multiply', function () {
+        it('string-{.2×.1}', function () {
+          assert.equal(basicCalc.exec('×', '.1', '.2').get(), '0.02');
+        });
+
+        it('string-{.2×.12345678987654321}', function () {
+          assert.equal(
+            basicCalc.exec('×', '.12345678987654321', '.2').get(),
+            '0.024691357975308642',
+          );
+        });
+      });
+
+      describe('basicCalc-division', function () {
+        it('string-{.2÷.1}', function () {
+          assert.equal(basicCalc.exec('÷', '.1', '.2').get(), '2');
+        });
+
+        it('string-{.1÷.2}', function () {
+          assert.equal(basicCalc.exec('÷', '.2', '.1').get(), '0.5');
         });
       });
 
@@ -69,7 +92,7 @@
         });
 
         it('(3×5+.2)÷3-0.8', function () {
-          assert.equal(calculator.calc('(3×5+.2)÷3-0.8'), '0.4266666666666666');
+          assert.equal(calculator.calc('(3×5+.2)÷3-0.8'), '4.266666666666666');
         });
 
         it('((3×5+.26666666666666666)÷3-78)-(2999999999999999999999×16.8)', function () {
@@ -77,7 +100,7 @@
             calculator.calc(
               '((3×5+.26666666666666666)÷3-78)-(2999999999999999999999×16.8)',
             ),
-            '仅测试，估计算不出',
+            '仅测试，都没算精确值',
           );
         });
       });
