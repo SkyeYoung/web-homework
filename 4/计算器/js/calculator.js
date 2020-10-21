@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-18 19:16:04
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-20 23:31:30
+ * @LastEditTime: 2020-10-21 13:26:32
  * @FilePath: \程序\4\计算器\js\calculator.js
  */
 
@@ -68,7 +68,10 @@ const tool = {
    */
   float2int: canUseBigInt
     ? (numStr, precision) => {
-        const [integer, decimals] = ('0' + numStr).split('.');
+        const [integer, decimals] = (numStr.startsWith('-')
+          ? ''
+          : '0' + numStr
+        ).split('.');
         return BigInt(
           integer +
             (typeof decimals === 'undefined'
@@ -280,6 +283,7 @@ const basicCalc = {
         }
 
         this.set(result);
+        console.log(result);
       } else {
         this.set(String(result / 10 ** precision));
       }

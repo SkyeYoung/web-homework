@@ -1,26 +1,20 @@
 <!--
  * @Date: 2020-10-20 20:55:51
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-20 22:46:29
+ * @LastEditTime: 2020-10-21 13:27:46
  * @FilePath: \程序\4\计算器\test.html
 -->
 <!DOCTYPE html>
 <html>
   <head>
-    <!-- add mocha css, to show results -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css"
     />
-    <!-- add mocha framework code -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
-    <script>
-      mocha.setup('bdd'); // minimal setup
-    </script>
-    <!-- add chai -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
     <script>
-      // chai has a lot of stuff, let's make assert global
+      mocha.setup('bdd');
       let assert = chai.assert;
     </script>
   </head>
@@ -29,18 +23,18 @@
     <!-- the element with id="mocha" will contain test results -->
     <div id="mocha"></div>
 
-    <script src="./js/calculator.js"></script>
-    <script>
+    <script type="module">
+      import { basicCalc, calculator } from './js/calculator.js';
       describe('basicCalc-plus', function () {
-        it('小数相加-string-{.1+.2}', function () {
+        it('小数相加-string-{.2+.1}', function () {
           assert.equal(basicCalc.exec('plus', '.1', '.2').get(), '0.3');
         });
 
-        it('小数相加-number-{.1+.2}', function () {
+        it('小数相加-number-{.2+.1}', function () {
           assert.equal(basicCalc.exec('plus', 0.1, 0.2).get(), '0.3');
         });
 
-        it('小数相加-string-{.12345678987654321+.2}', function () {
+        it('小数相加-string-{.2+.12345678987654321}', function () {
           assert.equal(
             basicCalc.exec('plus', '.12345678987654321', '.2').get(),
             '0.32345678987654321',
@@ -78,12 +72,14 @@
           assert.equal(calculator.calc('(3×5+.2)÷3-0.8'), '0.4266666666666666');
         });
 
-        // it('((3×5+.2)÷3-78)-(.29999×16.8)', function () {
-        //   assert.equal(
-        //     calculator.calc('((3×5+.2)÷3-78)-(.29999×16.8)'),
-        //     '0.4266666666666666',
-        //   );
-        // });
+        it('((3×5+.26666666666666666)÷3-78)-(2999999999999999999999×16.8)', function () {
+          assert.equal(
+            calculator.calc(
+              '((3×5+.26666666666666666)÷3-78)-(2999999999999999999999×16.8)',
+            ),
+            '仅测试，估计算不出',
+          );
+        });
       });
 
       mocha.run();
