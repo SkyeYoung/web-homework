@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-09-13 10:04:06
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-20 12:21:27
+ * @LastEditTime: 2020-10-22 20:54:41
  * @FilePath: \程序\4\计算器\js\tool.js
  */
 

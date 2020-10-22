@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-20 23:01:36
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-21 23:20:32
+ * @LastEditTime: 2020-10-22 00:18:48
  * @FilePath: \程序\4\计算器\js\plugin.js
  */
 import { calculator } from './calculator.js';
@@ -21,10 +21,7 @@ const percent = {
   priorTo: ['others'],
   leftValIsOptional: true,
   needProcess: false,
-  exec: (leftVal, rightVal) => {
-    const result = (leftVal || 0) + rightVal / 10;
-    return String(result);
-  },
+  exec: (leftVal, rightVal) => (leftVal || 0) + rightVal / 10,
 };
 
 calculator.register(pi);

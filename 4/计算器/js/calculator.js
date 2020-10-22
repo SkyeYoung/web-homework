@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-18 19:16:04
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-22 00:13:49
+ * @LastEditTime: 2020-10-22 23:22:09
  * @FilePath: \程序\4\计算器\js\calculator.js
  */
 
@@ -58,7 +58,11 @@ const tool = {
     const longPrecision = Math.max(d1.length, d2.length);
     return canUseBigInt
       ? longPrecision
-      : this.safePrecision(longPrecision, numStr1, numStr2);
+      : this.safePrecision(
+          Math.max(longPrecision, precision),
+          numStr1,
+          numStr2,
+        );
   },
   /**
    * @function
@@ -315,8 +319,6 @@ const basicCalc = {
       result = String(result);
       intResult = String(intResult);
 
-      console.log(result, intResult);
-
       if (canUseBigInt) {
         if (!result.startsWith(intResult)) {
           // 在数据前添零
@@ -468,7 +470,7 @@ const calculator = {
     const result = [];
 
     suffixArr.forEach((v) => {
-      return result.push(
+      result.push(
         tool.isOperator(v)
           ? basicCalc.exec(v, result.pop(), result.pop() || 0).get() // 左值为空时默认返回 0
           : v,
@@ -486,4 +488,4 @@ const calculator = {
   },
 };
 
-export { canUseBigInt, basicCalc, calculator };
+export { canUseBigInt, tool, basicCalc, calculator };

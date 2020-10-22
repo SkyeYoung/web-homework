@@ -1,0 +1,123 @@
+@import 'tool';
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+
+  margin: 0;
+  overflow: hidden;
+}
+
+input[type='button'] {
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+body {
+  background-image: url(../img/bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#calculator {
+  background-color: rgba($color: #000000, $alpha: 0.65);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba($color: #000000, $alpha: 0.2),
+    0 -3px 8px rgba($color: #000000, $alpha: 0.2);
+  backdrop-filter: blur(15px);
+
+  .header {
+    height: 25px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+    > input[type='button'] {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-left: 5px;
+
+      &:first-of-type {
+        margin-left: 10px;
+      }
+
+      &.red {
+        background-color: #fb5753;
+      }
+
+      &.yellow {
+        background-color: #e8bf33;
+      }
+
+      &.green {
+        background-color: #55c12a;
+      }
+    }
+  }
+
+  $sqrt_2: sqrt(2);
+  $width: 250;
+  .main {
+    width: #{$width}px;
+    height: #{$width * $sqrt_2}px;
+
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+
+    > .screen {
+      grid-column: 1 / 5;
+      grid-row: 1 / 3;
+      padding: 8px;
+
+      > #line1,
+      > #line2 {
+        text-align: right;
+        height: 50%;
+        color: #cccccc;
+        transition: all 0.4s;
+      }
+
+      > .show {
+        font-size: 2em;
+        color: #ffffff !important;
+      }
+    }
+
+    > input[type='button'] {
+      color: #ffffff;
+      background-color: #8c8c8c;
+      transition: background 0.3s;
+      margin: 0.5px;
+      font-size: 16px;
+
+      &.fn {
+        background-color: #6a6a6a;
+      }
+
+      &.op {
+        background-color: #ff9e2d;
+      }
+
+      &.zero {
+        grid-column: 1 /3;
+      }
+
+      &.clicked {
+        background-color: #5d595a;
+      }
+    }
+  }
+}
