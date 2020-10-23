@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-18 19:16:04
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-22 23:22:09
+ * @LastEditTime: 2020-10-23 13:17:50
  * @FilePath: \程序\4\计算器\js\calculator.js
  */
 
@@ -72,15 +72,15 @@ const tool = {
    */
   float2int: canUseBigInt
     ? (numStr, precision) => {
-        const [integer, decimals] = (numStr.startsWith('-')
-          ? ''
-          : '0' + numStr
+        const [integer, decimals] = (
+          (numStr.startsWith('-') ? '' : '0') + numStr
         ).split('.');
         return BigInt(
           integer +
-            (typeof decimals === 'undefined'
-              ? ''.padEnd(precision, '0')
-              : decimals.padEnd(precision, '0')),
+            (typeof decimals === 'undefined' ? '' : decimals).padEnd(
+              precision,
+              '0',
+            ),
         );
       }
     : (numStr, precision) => Math.trunc(+numStr * 10 ** precision),
@@ -144,11 +144,12 @@ const basicCalc = {
       leftValIsOptional: true,
       needProcess: true,
       exec: (leftVal, rightVal, precision) => {
-        let intResult =
+        let intResult = String(
           (leftVal - rightVal) /
-          (canUseBigInt ? BigInt(10 ** precision) : 10 ** precision);
+            (canUseBigInt ? BigInt(10 ** precision) : 10 ** precision),
+        );
         intResult =
-          String(intResult) === '0' ? ''.padEnd(precision + 1, '0') : intResult;
+          intResult === '0' ? ''.padEnd(precision + 1, '0') : intResult;
         return [String(leftVal - rightVal), intResult];
       },
     },
@@ -159,15 +160,14 @@ const basicCalc = {
       leftValIsOptional: false,
       needProcess: true,
       exec: (leftVal, rightVal, precision) => {
-        let intResult =
+        let intResult = String(
           (leftVal * rightVal) /
-          (canUseBigInt
-            ? BigInt((10 ** precision) ** 2)
-            : (10 ** precision) ** 2);
+            (canUseBigInt
+              ? BigInt((10 ** precision) ** 2)
+              : (10 ** precision) ** 2),
+        );
         intResult =
-          String(intResult) === '0'
-            ? ''.padEnd(precision * 2 + 1, '0')
-            : intResult;
+          intResult === '0' ? ''.padEnd(precision * 2 + 1, '0') : intResult;
         return [String(leftVal * rightVal), intResult];
       },
     },
@@ -289,7 +289,7 @@ const basicCalc = {
       (typeof this.plugins[name] !== 'undefined' && this.plugins[name]);
     const func = action.exec;
 
-    // 默认为 currentValue
+    // leftValIsOptional 左值可选的话，默认是 0 否则是 currentValue
     if (leftVal === '')
       leftVal = action.leftValIsOptional ? '0' : this.currentValue;
 
@@ -315,7 +315,8 @@ const basicCalc = {
           precision,
         ),
       );
-      // 再转一次防止操作函数中未做相关操作
+
+      // 再转一次字符串防止操作函数中未做相关操作
       result = String(result);
       intResult = String(intResult);
 

@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-22 00:57:24
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-22 22:40:35
+ * @LastEditTime: 2020-10-23 15:52:19
  * @FilePath: \程序\4\计算器\js\component.js
  */
 
@@ -37,7 +37,10 @@ class DragAndDrop extends HTMLElement {
       if (!ele.classList.contains('grabbing')) ele.classList.add('grabbing');
     };
   }
-
+  /**
+   *
+   * @param {HTMLElement} container
+   */
   initContainer(container) {
     container.addEventListener('mousedown', function (event) {
       const layout = this.getBoundingClientRect();
@@ -51,11 +54,14 @@ class DragAndDrop extends HTMLElement {
       // 在 document 中监听移动事件
       document.addEventListener('mousemove', docMousemove);
       //
-      container.addEventListener('mouseup', () => {
-        document.removeEventListener('mousemove', docMousemove);
-        this.style.willChange = null;
-        if (this.classList.contains('grabbing'))
-          this.classList.remove('grabbing');
+      document.addEventListener('mouseup', (event) => {
+        const ele = event.target;
+        if (ele === container || container.contains(ele)) {
+          document.removeEventListener('mousemove', docMousemove);
+          container.style.willChange = null;
+          if (container.classList.contains('grabbing'))
+            container.classList.remove('grabbing');
+        }
       });
     });
 

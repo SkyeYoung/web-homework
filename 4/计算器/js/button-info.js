@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-22 22:36:56
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-22 22:39:14
+ * @LastEditTime: 2020-10-23 15:40:25
  * @FilePath: \程序\4\计算器\js\button-info.js
  */
 const headerBtn = [
