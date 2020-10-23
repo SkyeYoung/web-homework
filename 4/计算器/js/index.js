@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-18 16:54:31
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-23 17:16:45
+ * @LastEditTime: 2020-10-23 20:30:00
  * @FilePath: \程序\4\计算器\js\index.js
  */
 
@@ -158,8 +158,13 @@ function calcProcess(event) {
           calcData.expr = calcData.lastResult + value;
         } else if (tool.isOperator(lastValue)) {
           if (value === '( )') calcData.expr += '(';
-          else if (value === '.') calcData.expr += '.';
-          else if (value === '-') calcData.expr += '-';
+          else if (
+            (lastValue === ')' && lastValue !== value) ||
+            value === '.' ||
+            value === '-'
+          ) {
+            calcData.expr += value;
+          }
         } else {
           if (value === '( )') {
             if (lastValue === '' || calcData.expr.indexOf('(') === -1) {
