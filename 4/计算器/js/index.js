@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-10-18 16:54:31
  * @LastEditors: Skye Young
- * @LastEditTime: 2020-10-23 16:12:34
+ * @LastEditTime: 2020-10-23 17:16:45
  * @FilePath: \程序\4\计算器\js\index.js
  */
 
@@ -13,6 +13,8 @@ import { headerBtn, calcBtn } from './button-info.js';
 // 定义 DragAndDrop 组件
 customElements.define('drag-drop', DragAndDrop);
 
+// 计算器所在元素
+const calcWindow = document.querySelector('drag-drop#calculator');
 // 计算器要使用的数据
 const calcData = {
   expr: '', // 表达式
@@ -149,6 +151,7 @@ function calcProcess(event) {
         calcData.expr = expr;
       } else if (value === '=') {
         calcData.lastResult = calcData.tempResult;
+        calcWindow.dataset.cheer = calcData.lastResult === atob('Njc1');
       } else {
         if (calcData.lastResult === calcData.tempResult && value !== '( )') {
           clear();
@@ -175,9 +178,6 @@ function calcProcess(event) {
     }
   }
 }
-
-// 计算器所在元素
-const calcWindow = document.querySelector('drag-drop#calculator');
 
 // 渲染计算器
 m.render(calcWindow, {
