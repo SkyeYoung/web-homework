@@ -1,0 +1,151 @@
+.products,
+.new-product,
+.edge,
+.presentation,
+.main-links {
+  margin-top: 48px;
+}
+
+.products {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 15px;
+}
+
+.products > a {
+  color: #000000;
+  font-weight: bold;
+}
+
+.products > a > .card {
+  width: 184px;
+  border: none;
+  padding: 10px 0;
+  border: 2px solid transparent;
+}
+
+.products > a > .card > img {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto;
+}
+
+.products > a > .card > .card-body {
+  padding: 0;
+  padding-top: 5px;
+}
+
+.products > a > .card > .card-body > .card-text {
+  margin: 0 auto;
+  text-align: center;
+  width: 125px;
+}
+
+.products > a:focus > .card {
+  background-color: #e5f0f8;
+  border-color: currentColor;
+}
+
+.new-product > .row > .card,
+.presentation-content > .row > .card {
+  border: 0;
+}
+
+.new-product > .row > .card:first-of-type,
+.presentation-content > .row > .card:first-of-type {
+  padding-left: 0;
+}
+
+.new-product > .row > .card:last-of-type,
+.presentation-content > .row > .card:last-of-type {
+  padding-right: 0;
+}
+
+.new-product > .row > .card .to-product,
+.presentation-content > .row > .card .to-product {
+  -webkit-transition: right 400ms ease-in-out;
+  transition: right 400ms ease-in-out;
+  color: #0067b8;
+}
+
+.new-product > .row > .card .to-product::after,
+.presentation-content > .row > .card .to-product::after {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-image: url("data:image/svg+xml,%3Csvg  viewBox='0 0 20 20' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z'/%3E%3C/svg%3E");
+  background-size: 1rem 1rem;
+  background-repeat: no-repeat;
+  position: relative;
+  margin-bottom: -6px;
+}
+
+.new-product > .row > .card .to-product:hover::after,
+.presentation-content > .row > .card .to-product:hover::after {
+  right: -4px;
+}
+
+.edge {
+  position: relative;
+}
+
+.edge > .content {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  -webkit-transform: translate(-50%, 30%);
+          transform: translate(-50%, 30%);
+  text-align: center;
+}
+
+.presentation-content img {
+  height: 145px;
+}
+
+.social-media img {
+  width: 32px;
+  margin-left: 12px;
+}
+
+.links-container {
+  margin: 0 calc(-5% - 7px);
+}
+
+.links-container > .main-links,
+.links-container > .other-links {
+  padding: 0 5%;
+  background-color: #f2f2f2;
+}
+
+.links-container > .main-links .section,
+.links-container > .other-links .section {
+  padding-top: 36px;
+}
+
+.links-container > .main-links h6,
+.links-container > .other-links h6 {
+  font-weight: 600;
+}
+
+.links-container > .main-links a,
+.links-container > .other-links a {
+  display: block;
+  font-size: 12px;
+  padding: 8px 0;
+  color: #616161;
+}
+
+.links-container > .main-links .link > a,
+.links-container > .other-links .link > a {
+  display: inline;
+  padding-right: 24px;
+}
+
+.links-container > .other-links {
+  padding-top: 28px;
+}

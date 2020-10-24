@@ -1,0 +1,148 @@
+.products,
+.new-product,
+.edge,
+.presentation,
+.main-links {
+  margin-top: 48px;
+}
+
+.products {
+  display: flex;
+  justify-content: center;
+  font-size: 15px;
+
+  > a {
+    color: #000000;
+    font-weight: bold;
+
+    > .card {
+      width: 184px;
+      border: none;
+      padding: 10px 0;
+      border: 2px solid transparent;
+
+      > img {
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+      }
+
+      > .card-body {
+        padding: 0;
+        padding-top: 5px;
+
+        > .card-text {
+          margin: 0 auto;
+          text-align: center;
+          width: 125px;
+        }
+      }
+    }
+
+    &:focus > .card {
+      background-color: #e5f0f8;
+      border-color: currentColor;
+    }
+  }
+}
+
+.new-product,
+.presentation-content {
+  > .row {
+    > .card {
+      border: 0;
+
+      &:first-of-type {
+        padding-left: 0;
+      }
+      &:last-of-type {
+        padding-right: 0;
+      }
+
+      $link-color: #0067b8;
+      .to-product {
+        transition: right 400ms ease-in-out;
+        color: #0067b8;
+
+        &::after {
+          content: '';
+
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          background-image: url("data:image/svg+xml,%3Csvg  viewBox='0 0 20 20' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z'/%3E%3C/svg%3E");
+          background-size: 1rem 1rem;
+          background-repeat: no-repeat;
+
+          position: relative;
+          margin-bottom: -6px;
+        }
+
+        &:hover {
+          &::after {
+            right: -4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.edge {
+  position: relative;
+
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 30%);
+    text-align: center;
+  }
+}
+
+.presentation-content {
+  img {
+    height: 145px;
+  }
+}
+
+.social-media {
+  img {
+    width: 32px;
+    margin-left: 12px;
+  }
+}
+
+.links-container {
+  margin: 0 calc(-5% - 7px);
+
+  > .main-links,
+  > .other-links {
+    padding: 0 5%;
+    background-color: #f2f2f2;
+
+    .section {
+      padding-top: 36px;
+    }
+
+    h6 {
+      font-weight: 600;
+    }
+
+    a {
+      display: block;
+      font-size: 12px;
+      padding: 8px 0;
+      color: #616161;
+    }
+
+    .link > a {
+      display: inline;
+      padding-right: 24px;
+    }
+  }
+
+  > .other-links {
+    padding-top: 28px;
+  }
+}
