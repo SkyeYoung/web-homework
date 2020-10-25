@@ -1,3 +1,46 @@
+body {
+  padding: 0% 5%;
+  overflow-x: hidden;
+}
+
+.menu-links-container {
+  position: static;
+
+  .menu-links {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    float: none;
+
+    width: 100vw;
+    background-color: rgb(242, 242, 242);
+    border-width: 1px;
+
+    // 在最下面
+    @extend .links-container;
+
+    // 为什么有这么多 !important 呢？因为我先写了下面的 .links-container。。。然后懒得改
+    margin: 0 !important;
+    padding: 0;
+    border: 0;
+
+    .main-links {
+      margin-top: 0;
+    }
+
+    .sitemap-link {
+      display: block;
+      height: 35px;
+      line-height: 35px;
+      width: 100vw !important;
+      background-color: #e6e6e6;
+      text-align: center;
+      margin: 30px -5% 0px !important;
+    }
+  }
+}
+
 .products,
 .new-product,
 .edge,
@@ -46,23 +89,23 @@
   }
 }
 
-.new-product,
-.presentation-content {
+.new-product {
   > .row {
+    margin-left: -30px;
+    margin-right: -30px;
+
     > .card {
       border: 0;
 
-      &:first-of-type {
+      > .card-body {
         padding-left: 0;
       }
-      &:last-of-type {
-        padding-right: 0;
-      }
 
-      $link-color: #0067b8;
-      .to-product {
-        transition: right 400ms ease-in-out;
-        color: #0067b8;
+      $link-color: '0067b8';
+      a.to-product {
+        color: \##{$link-color};
+        font-weight: 600;
+        border: 2px solid transparent;
 
         &::after {
           content: '';
@@ -70,18 +113,26 @@
           display: inline-block;
           width: 20px;
           height: 20px;
-          background-image: url("data:image/svg+xml,%3Csvg  viewBox='0 0 20 20' fill='currentColor' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg  viewBox='0 0 20 20' fill='%23#{$link-color}' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' d='M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z'/%3E%3C/svg%3E");
           background-size: 1rem 1rem;
           background-repeat: no-repeat;
 
           position: relative;
           margin-bottom: -6px;
+
+          transform: translateX(2px);
+          transition: transform 0.2s ease-in-out;
         }
 
         &:hover {
           &::after {
-            right: -4px;
+            transform: translateX(6px);
           }
+        }
+
+        &:focus {
+          background-color: #e5f0f8;
+          border-color: #000000;
         }
       }
     }
@@ -101,9 +152,7 @@
 }
 
 .presentation-content {
-  img {
-    height: 145px;
-  }
+  @extend .new-product;
 }
 
 .social-media {
@@ -114,7 +163,15 @@
 }
 
 .links-container {
-  margin: 0 calc(-5% - 7px);
+  margin: 0 -5%;
+  font-size: 12px;
+
+  a {
+    &:focus {
+      outline: 1px dashed;
+      outline-offset: 3px;
+    }
+  }
 
   > .main-links,
   > .other-links {
@@ -131,18 +188,24 @@
 
     a {
       display: block;
-      font-size: 12px;
-      padding: 8px 0;
+      width: fit-content;
+      margin: 15px 0;
       color: #616161;
-    }
-
-    .link > a {
-      display: inline;
-      padding-right: 24px;
     }
   }
 
   > .other-links {
     padding-top: 28px;
+    padding-bottom: 20px;
+
+    > .link {
+      text-align: right;
+    }
+
+    a {
+      padding: 0%;
+      display: inline;
+      margin-right: 24px;
+    }
   }
 }
